@@ -1,0 +1,239 @@
+ext {
+    android = [
+            applicationId    : "cn.net.hylink.common",
+            compileSdkVersion: 28,
+            buildToolsVersion: "28.0.3",
+            minSdkVersion    : 19,
+            targetSdkVersion : 28,
+            versionCode      : 28,
+            versionName      : "0.2.8",
+    ]
+
+    dependVersion = [
+            androidSupportSdkVersion: "28.0.+",
+            retrofitSdkVersion      : "2.5.0",
+            rxjavaSdkVersion        : "2.2.4",
+            daggerSdkVersion        : "2.21",
+            glideSdkVersion         : "4.9.0",
+            rxlifecycle2SdkVersion  : "2.2.2",
+            lifecycle               : "2.0.0",
+            room                    : "2.1.0-alpha03",
+            androidXSdkVersion      : "1.0.0",
+            rxbindingVersion        : "3.0.0",
+    ]
+
+
+    retrofit = [
+            retrofit              : "com.squareup.retrofit2:retrofit:$dependVersion.retrofitSdkVersion",
+            retrofitConverterGson : "com.squareup.retrofit2:converter-gson:$dependVersion.retrofitSdkVersion",
+            retrofitAdapterRxjava2: "com.squareup.retrofit2:adapter-rxjava2:$dependVersion.retrofitSdkVersion",
+            //3.12.0支持Android 2.3+ (API level 9+)
+            okhttp3LoggerInterceptor: "com.squareup.okhttp3:logging-interceptor:3.12.0",
+    ]
+
+    gson = [
+            gson: 'com.google.code.gson:gson:2.8.5'
+    ]
+
+    okhttp = [
+            okhttp: "com.squareup.okhttp3:okhttp:3.12.0"
+    ]
+
+    rxJava = [
+            rxJava                 : "io.reactivex.rxjava2:rxjava:$dependVersion.rxjavaSdkVersion",
+            rxAndroid              : "io.reactivex.rxjava2:rxandroid:$dependVersion.rxAndroidSdkVersion",
+            rxlifecycle2           : "com.trello.rxlifecycle2:rxlifecycle:$dependVersion.rxlifecycle2SdkVersion",
+            rxlifecycle2_android   : "com.trello.rxlifecycle2:rxlifecycle-android:$dependVersion.rxlifecycle2SdkVersion",
+            rxlifecycle2_components: "com.trello.rxlifecycle2:rxlifecycle-components:$dependVersion.rxlifecycle2SdkVersion",
+            rxbinding3             : "com.jakewharton.rxbinding3:rxbinding:$dependVersion.rxbindingVersion",
+            rxbinding3_core        : "com.jakewharton.rxbinding3:rxbinding-core:$dependVersion.rxbindingVersion",
+            rxbinding3_recyclerview: "com.jakewharton.rxbinding3:rxbinding-recyclerview:$dependVersion.rxbindingVersion",
+    ]
+
+    dagger2 = [
+            dagger2         : "com.google.dagger:dagger:$dependVersion.daggerSdkVersion",
+            dagger2Processor: "com.google.dagger:dagger-compiler:$dependVersion.daggerSdkVersion"
+    ]
+
+    test = [
+            junit                         : "junit:junit:4.12",
+            Mockito                       : "org.mockito:mockito-core:2.8.9",
+            espresso                      : "androidx.test.espresso:espresso-core:3.1.0",
+            runner                        : "androidx.test:runner:1.1.0",
+            rules                         : "androidx.test:rules:1.1.0",
+            powermock_module_junit        : "org.powermock:powermock-module-junit4:1.7.3",
+            powermock_module_junit4_rule  : "org.powermock:powermock-module-junit4-rule:1.7.3",
+            powermock_api_mockito2        : "org.powermock:powermock-api-mockito2:1.7.3",
+            powermock_classloading_xstream: "org.powermock:powermock-classloading-xstream:1.7.3",
+            robolectric                   : "org.robolectric:robolectric:4.2",
+    ]
+
+    glide = [
+            glide        : "com.github.bumptech.glide:glide:$dependVersion.glideSdkVersion",
+            glideCompiler: "com.github.bumptech.glide:compiler:$dependVersion.glideSdkVersion",
+            glideOkhttp  : "com.github.bumptech.glide:okhttp3-integration:$dependVersion.glideSdkVersion",
+    ]
+
+    lifecycle = [
+            runtime   : "androidx.lifecycle:lifecycle-runtime:$dependVersion.lifecycle",
+            extensions: "androidx.lifecycle:lifecycle-extensions:$dependVersion.lifecycle",
+            compiler  : "androidx.lifecycle:lifecycle-compiler:$dependVersion.lifecycle",
+            java8     : "androidx.lifecycle:lifecycle-common-java8:$dependVersion.lifecycle",
+
+    ]
+
+    room = [
+            runtime : "androidx.room:room-runtime:$dependVersion.room",
+            compiler: "androidx.room:room-compiler:$dependVersion.room",
+            rxjava2 : "androidx.room:room-rxjava2:$dependVersion.room",
+            testing : "androidx.room:room-testing:$dependVersion.room",
+    ]
+
+    androidXDeps = [
+            support         : "androidx.legacy:legacy-support-v4:$dependVersion.androidXSdkVersion",
+            appcompat       : "androidx.appcompat:appcompat:$dependVersion.androidXSdkVersion",
+            design          : "com.google.android.material:material:$dependVersion.androidXSdkVersion",
+            recyclerview    : "androidx.recyclerview:recyclerview:$dependVersion.androidXSdkVersion",
+            multidex        : "androidx.multidex:multidex:2.0.0",
+            constraintlayout: "androidx.constraintlayout:constraintlayout:1.1.2",
+    ]
+    cameraX = [
+            camera_camera2  : "androidx.camera:camera-camera2:1.0.0-beta03",
+            camera_lifecycle : "androidx.camera:camera-lifecycle:1.0.0-beta03",
+            camera_view     : "androidx.camera:camera-view:1.0.0-alpha10",
+    ]
+
+    dependencies = [
+            //缓存
+            rxcache2               : "com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x",
+            rxcache_jolyglot_gson  : "com.github.VictorAlbertos.Jolyglot:gson:0.0.4",
+            butterknife            : "com.jakewharton:butterknife:10.0.0",
+            butterknife_apt        : "com.jakewharton:butterknife-compiler:10.0.0",
+            //内存泄漏监测:https://github.com/square/leakcanary
+            leakcanary_debug       : "com.squareup.leakcanary:leakcanary-android:1.6.2",
+            leakcanary_release     : "com.squareup.leakcanary:leakcanary-android-no-op:2.1",
+            leakcanary_fragment    : "com.squareup.leakcanary:leakcanary-support-fragment:2.1",
+            //屏幕适配
+            autosize               : "me.jessyan:autosize:1.1.1",
+            multidex               : "com.android.support:multidex:1.1.1",
+            //腾讯bugly
+            bugly_sdk              : "com.tencent.bugly:crashreport:3.1.0",
+            bugly_ndk              : "com.tencent.bugly:nativecrashreport:latest.release",
+
+            //数据库
+            sqlbrite               : 'com.squareup.sqlbrite3:sqlbrite:3.2.0',
+            //实体类生成工具
+            autoValue              : 'com.google.auto.value:auto-value:1.6.3',
+            autoValueAnnotations   : 'com.google.auto.value:auto-value-annotations:1.6.3',
+            //autoValue 的序列化
+            autoValueParcel        : 'com.ryanharter.auto.value:auto-value-parcel-adapter:0.2.6',
+            autoValueGsonAnnotation: 'com.ryanharter.auto.value:auto-value-gson:0.8.0',
+            autoValueGson          : 'com.ryanharter.auto.value:auto-value-gson-annotations:0.8.0',
+            //数据库
+            supportSqlite          : 'android.arch.persistence:db:1.1.0',
+            supportSqliteFramework : 'androidx.sqlite:sqlite-framework:2.0.0-beta01',
+            //epoxy RecyclerView 中不同的并刷新
+            epoxy                  : 'com.airbnb.android:epoxy:3.3.0',
+            epoxyProcessor         : 'com.airbnb.android:epoxy-processor:3.3.0',
+            //dagger2 android
+            dagger2Android         : "com.google.dagger:dagger-android:$dependVersion.daggerSdkVersion",
+            dagger2AndroidSupport  : "com.google.dagger:dagger-android-support:$dependVersion.daggerSdkVersion",
+            dagger2AndroidProcessor: "com.google.dagger:dagger-android-processor:$dependVersion.daggerSdkVersion",
+            //友盟登录、分享
+            umeng                  : "com.umeng.sdk:common:1.5.0",
+            umeng_analytics        : "com.umeng.sdk:analytics:7.5.0",
+            umeng_share_core       : "com.umeng.sdk:share-core:latest.integration",
+            umeng_share_qq         : "com.umeng.sdk:share-qq:latest.integration",
+            umeng_share_wechat     : "com.umeng.sdk:share-wechat:latest.integration",
+            //aop
+            aspectj                : 'org.aspectj:aspectjrt:1.9.2',
+            //高德地图
+            gao_de_location        : 'com.amap.api:location:latest.integration',
+            gao_de_map             : 'com.amap.api:map2d:latest.integration',
+            gao_de_search          : 'com.amap.api:search:latest.integration',
+            //阿里路由  https://github.com/alibaba/ARouter
+            arouter_api            : "com.alibaba:arouter-api:1.4.1",
+            arouter_compiler       : "com.alibaba:arouter-compiler:1.2.2",
+            //BRVAH    https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+            BRVAH                  : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx",
+            //加载 https://github.com/KingJA/LoadSir
+            loadsir                : "com.kingja.loadsir:loadsir:1.3.6",
+            //banner https://github.com/wenchaosong/Banner
+            Banner                 : 'com.ms:Banner-androidx:2.3.16',
+            //ItemDecoration https://github.com/oubowu/PinnedSectionItemDecoration/blob/master/README-CN.md
+            ItemDecoration         : 'com.oushangfeng:PinnedSectionItemDecoration:1.3.2-androidx',
+            //时间总线:https://github.com/JeremyLiao/LiveEventBus
+            live_event_bus         : "com.jeremyliao:live-event-bus:1.2.1",
+            //圆角图片 https://github.com/ai2101039/YLCircleImageView
+            YLCircleImageView      : 'com.github.ai2101039:YLCircleImageView:v1.0.6',
+            //circleImageView
+            circleimageview        : "de.hdodenhof:circleimageview:2.1.0",
+            alibaba_tangram        : "com.alibaba.android:tangram:3.3.6@aar",
+            x5                     : "com.tencent.tbs.tbssdk:sdk:43697",
+            //图片压缩 https://github.com/nanchen2251/CompressHelper
+            CompressHelper         : "com.github.nanchen2251:CompressHelper:1.0.5",
+            //图片压缩 https://github.com/Curzibn/Luban
+            Luban                  : "top.zibin:Luban:1.1.8",
+            //https://github.com/Bigkoo/Android-PickerView
+            PickerView             : "com.contrarywind:Android-PickerView:4.1.9",
+            wheelview              : "com.contrarywind:wheelview:4.0.9",
+            //https://github.com/crazycodeboy/TakePhoto
+            takePhoto              : "org.devio.takephoto:takephoto_library:4.1.0",
+            //]Android流式布局 https://github.com/hongyangAndroid/FlowLayout
+            flowlayout             : "com.hyman:flowlayout-lib:1.1.2",
+            //阿里云oss
+            aliyunOss              : "com.aliyun.dpa:oss-android-sdk:+",
+            //图片选择 https://github.com/zhihu/Matisse
+            matisse                : "com.zhihu.android:matisse:0.5.3-beta2",
+            //微信
+            wechat_without_mta     : "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+",
+            //沉浸式 https://github.com/laobie/StatusBarUtil
+            statusbarutil          : 'com.jaeger.statusbarutil:library:1.5.1',
+            //zxing
+            zxing_android_core     : 'com.google.zxing:android-core:3.3.0',
+            zxing_core             : 'com.google.zxing:core:3.3.2',
+            //https://github.com/jenly1314/AppUpdater 下载更新
+            app_updater            : 'com.king.app:app-updater:1.0.8-androidx',
+            app_dialog             : 'com.king.app:app-dialog:1.0.8-androidx',
+            //https://github.com/H07000223/FlycoTabLayout/blob/master/README_CN.md
+            FlycoTabLayout_Lib     : 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar',
+            MagicIndicator         : 'com.github.hackware1993:MagicIndicator:1.5.0',
+            //https://github.com/dueeeke/DKVideoPlaye
+            DKVideoPlaye           : 'com.github.dueeeke.dkplayer:dkplayer-java:3.2.6',
+            DKVideoPlaye_ui        : 'com.github.dueeeke.dkplayer:dkplayer-ui:3.2.6',
+            //可选，使用ijkplayer进行解码
+            DKVideoPlaye_ijk       : 'com.github.dueeeke.dkplayer:player-ijk:3.2.6',
+            //https://github.com/razerdp/BasePopup popup
+            BasePopup              : 'com.github.razerdp:BasePopup:2.2.2',
+            //jedis
+            Jedis                  : 'redis.clients:jedis:3.2.0',
+            //mqtt
+            mqttv3_service         : 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1',
+            mqttv3                 : 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.2',
+            free_reflection        : 'me.weishu:free_reflection:1.2.0',
+            //卡顿检测
+            // 仅在debug包启用BlockCanary进行卡顿监控和提示的话，可以这么用
+            blockcanary_debug      :'com.github.markzhai:blockcanary-android:1.5.0',
+            blockcanary_release    : 'com.github.markzhai:blockcanary-no-op:1.5.0',
+            //哔哩哔哩播放器 https://github.com/Bilibili/ijkplayer
+            ijkplayer_java         : 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8',
+            ijkplayer_armv7a       : 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8',
+            hylink_common          : 'cn.net.hylink.common:hylink_common:0.0.1',
+            gsyVideoPlayer         : 'com.shuyu:gsyVideoPlayer-java:7.1.3',
+            //是否需要ExoPlayer模式
+            GSYVideoPlayer_exo     : 'com.shuyu:GSYVideoPlayer-exo2:7.1.3',
+            //更多ijk的编码支持
+            GSYVideoPlayer_exo_so  : 'com.shuyu:gsyVideoPlayer-ex_so:7.1.3',
+            fastjson               : 'com.alibaba:fastjson:1.2.68',
+
+    ]
+
+    cameraX = cameraX.values()
+    networkLibs = retrofit.values()
+    rxJavaLibs = rxJava.values()
+    glideLibs = glide.values()
+    testLibs = test.values()
+    androidXLibs = androidXDeps.values()
+
+
+}
