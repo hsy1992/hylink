@@ -1,0 +1,16 @@
+{
+	"urlConfigBean": {
+		"version": "1",
+		"appId": "1992",
+		"orgId": "199208",
+		"networkAreaCode": "3",
+		"packageName": "cn.net.endless.hljtest",
+		"regionalismCode": "1992123",
+		"networkCode": "1992123"
+
+	},
+	"list": [{
+		"url": "/endless",
+		"resourceId": "1"
+	}]
+}

@@ -54,8 +54,8 @@ public class CredentialInterceptor implements Interceptor {
 
         Request request = chain.request();
 
-        if (CredentialUtil.getInstance().getAddressMap() != null ||
-                CredentialUtil.getInstance().getConfigFileBean() != null ||
+        if (CredentialUtil.getInstance().getAddressMap() != null &&
+                CredentialUtil.getInstance().getConfigFileBean() != null &&
                 CredentialUtil.getInstance().getThisCredentialBean() != null
         ) {
 
@@ -125,6 +125,7 @@ public class CredentialInterceptor implements Interceptor {
             AddressResponseBean addressBean = CredentialUtil.getInstance().getAddressMap().get(resourceId);
             if (addressBean != null) {
                 map.put(path, addressBean);
+                return addressBean;
             }
         }
 

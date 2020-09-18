@@ -9,16 +9,15 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import cn.net.hylink.hljpolice.bean.AddressResponseBean;
 import cn.net.hylink.hljpolice.bean.ConfigFileBean;
 import cn.net.hylink.hljpolice.bean.CredentialBean;
 import cn.net.hylink.hljpolice.bean.UrlConfigBean;
-import cn.net.hylink.hljpolice.bean.UrlResourceBean;
 
 /**
  * @author haosiyuan
@@ -46,7 +45,7 @@ public class CredentialUtil {
     /**
      * 资源id 的映射
      */
-    private Map<String, AddressResponseBean> addressMap = new HashMap<>();
+    private Map<String, AddressResponseBean> addressMap;
 
     private Gson gson;
     private AutoParseResource autoParseResource;
@@ -55,6 +54,7 @@ public class CredentialUtil {
     private static class Instance {
         private static CredentialUtil credentialUtil = new CredentialUtil();
     }
+
     public static CredentialUtil getInstance() {
         return Instance.credentialUtil;
     }
@@ -70,6 +70,7 @@ public class CredentialUtil {
 
     /**
      * 获取应用凭证
+     *
      * @param configBean
      * @return
      */
@@ -80,7 +81,7 @@ public class CredentialUtil {
         }
 
         thisCredentialBean = appPreferences.getObject(PreferenceKey.CREDENTIAL_KEY, CredentialBean.class);
-        if (thisCredentialBean != null || thisCredentialBean.getVersion().equals(configBean.getVersion())) {
+        if (thisCredentialBean != null && thisCredentialBean.getVersion().equals(configBean.getVersion())) {
             return thisCredentialBean;
         }
 
@@ -94,9 +95,9 @@ public class CredentialUtil {
         bundle.putString("orgId", configBean.getOrgId());
         bundle.putString("networkAreaCode", configBean.getNetworkAreaCode());
         bundle.putString("packageName", configBean.getPackageName());
-        
-        Bundle callBack = context.getContentResolver().call(uri, "", null, bundle);
 
+//        Bundle callBack = context.getContentResolver().call(uri, "", null, bundle);
+        Bundle callBack = testData1();
         if (callBack == null) {
             Toast.makeText(context, "获取应用凭证失败", Toast.LENGTH_SHORT).show();
             return null;
@@ -121,6 +122,7 @@ public class CredentialUtil {
 
     /**
      * 获取资源地址
+     *
      * @return
      */
     public Map<String, AddressResponseBean> getResourceAddressList(CredentialBean credentialBean) {
@@ -129,10 +131,11 @@ public class CredentialUtil {
             return addressMap;
         }
 
-        Type type = new TypeToken<Map<String, AddressResponseBean>>() {}.getType();
+        Type type = new TypeToken<Map<String, AddressResponseBean>>() {
+        }.getType();
 
         addressMap = appPreferences.getObject(PreferenceKey.ADDRESS_LIST_KEY, type);
-        if (addressMap != null || addressMap.size() > 0) {
+        if (addressMap != null && addressMap.size() > 0) {
             return addressMap;
         }
 
@@ -144,8 +147,9 @@ public class CredentialUtil {
         params.putString("version", credentialBean.getVersion());
         params.putString("appCredential", credentialBean.getAppCredential());
 
-        Bundle callBack = context.getContentResolver().call(uri, "", null, params);
+//        Bundle callBack = context.getContentResolver().call(uri, "", null, params);
 
+        Bundle callBack = testData();
         if (callBack == null) {
             Toast.makeText(context, "获取应用资源地址失败", Toast.LENGTH_SHORT).show();
             return null;
@@ -157,7 +161,10 @@ public class CredentialUtil {
             int resultCode = callBack.getInt("resultCode");
             if (resultCode == 0) {
                 //寻址成功
-                List<AddressResponseBean> addressResponseBeanList = gson.fromJson(resourceList, type);
+                addressMap = new HashMap<>();
+                List<AddressResponseBean> addressResponseBeanList = gson.fromJson(resourceList,
+                        new TypeToken<List<AddressResponseBean>>() {
+                        }.getType());
 
                 for (AddressResponseBean addressResponseBean : addressResponseBeanList) {
                     addressMap.put(addressResponseBean.getResourceId(), addressResponseBean);
@@ -187,5 +194,28 @@ public class CredentialUtil {
 
     public ConfigFileBean getConfigFileBean() {
         return configFileBean;
+    }
+
+    private Bundle testData() {
+        Bundle bundle = new Bundle();
+        List<AddressResponseBean> addressResponseBeanList = new ArrayList<>();
+        AddressResponseBean addressResponseBean = new AddressResponseBean();
+        addressResponseBean.setResourceAddress("http://192.168.39.2:8080/endless");
+        addressResponseBean.setResourceId("1");
+        addressResponseBean.setResourceRegionalismCode("123");
+        addressResponseBean.setResourceServiceType("123");
+        addressResponseBeanList.add(addressResponseBean);
+        bundle.putInt("resultCode", 0);
+        bundle.putString("resourceList", gson.toJson(addressResponseBeanList));
+        bundle.putString("messageId", "100002");
+        return bundle;
+    }
+
+    private Bundle testData1() {
+        Bundle bundle = new Bundle();
+        bundle.putString("messageId", "100001");
+        bundle.putString("appCredential", "appCredential");
+        bundle.putString("userCredential", "userCredential");
+        return bundle;
     }
 }

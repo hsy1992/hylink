@@ -1,3 +1,4 @@
+include ':hljtest'
 include ':hljpolice'
 include ':app'
 rootProject.name='hylink_common'
