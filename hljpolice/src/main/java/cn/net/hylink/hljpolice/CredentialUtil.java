@@ -5,9 +5,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import cn.net.hylink.hljpolice.bean.AddressResponseBean;
+import cn.net.hylink.hljpolice.bean.ConfigFileBean;
+import cn.net.hylink.hljpolice.bean.CredentialBean;
 import cn.net.hylink.hljpolice.bean.UrlConfigBean;
+import cn.net.hylink.hljpolice.bean.UrlResourceBean;
 
 /**
  * @author haosiyuan
@@ -18,40 +29,163 @@ public class CredentialUtil {
 
     private Context context;
 
-    public void init(Context context) {
+    /**
+     * 寻址uri
+     */
+    public static final String CREDENTIAL_URI = "content://com.ydjw.ua.getCredential";
 
-        this.context = context.getApplicationContext();
+    /**
+     * 寻址uri
+     */
+    public static final String ADDRESS_URI = "content://com.ydjw.rsb.getResourceAddress";
+
+    private AppPreferences appPreferences;
+
+    private CredentialBean thisCredentialBean;
+
+    /**
+     * 资源id 的映射
+     */
+    private Map<String, AddressResponseBean> addressMap = new HashMap<>();
+
+    private Gson gson;
+    private AutoParseResource autoParseResource;
+    private ConfigFileBean configFileBean;
+
+    private static class Instance {
+        private static CredentialUtil credentialUtil = new CredentialUtil();
+    }
+    public static CredentialUtil getInstance() {
+        return Instance.credentialUtil;
     }
 
-    public void getCredential(UrlConfigBean configBean) {
-        Uri uri = Uri.parse("content://com.ydjw.ua.getCredential");
+    public void init(Context context, String fileName) {
+        this.context = context.getApplicationContext();
+        this.appPreferences = new AppPreferences(context.getApplicationContext());
+        gson = new Gson();
+        //初始化去解析文件 自动配置应用凭证等
+        autoParseResource = new AutoParseResource();
+        autoParseResource.parse(context.getApplicationContext(), gson, fileName);
+    }
+
+    /**
+     * 获取应用凭证
+     * @param configBean
+     * @return
+     */
+    public CredentialBean getCredential(UrlConfigBean configBean) {
+
+        if (thisCredentialBean != null) {
+            return thisCredentialBean;
+        }
+
+        thisCredentialBean = appPreferences.getObject(PreferenceKey.CREDENTIAL_KEY, CredentialBean.class);
+        if (thisCredentialBean != null || thisCredentialBean.getVersion().equals(configBean.getVersion())) {
+            return thisCredentialBean;
+        }
+
+        Uri uri = Uri.parse(CREDENTIAL_URI);
+
+        String messageId = "100001";
+        Bundle bundle = new Bundle();
+        bundle.putString("messageId", messageId);
+        bundle.putString("version", configBean.getVersion());
+        bundle.putString("appId", configBean.getAppId());
+        bundle.putString("orgId", configBean.getOrgId());
+        bundle.putString("networkAreaCode", configBean.getNetworkAreaCode());
+        bundle.putString("packageName", configBean.getPackageName());
+        
+        Bundle callBack = context.getContentResolver().call(uri, "", null, bundle);
+
+        if (callBack == null) {
+            Toast.makeText(context, "获取应用凭证失败", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+
+        if (messageId.equals(callBack.getString("messageId"))) {
+            String appCredential = callBack.getString("appCredential");
+            String userCredential = callBack.getString("userCredential");
+            CredentialBean returnCredentialBean = new CredentialBean();
+            returnCredentialBean.setAppCredential(appCredential);
+            returnCredentialBean.setUserCredential(userCredential);
+            returnCredentialBean.setPackageName(configBean.getPackageName());
+            returnCredentialBean.setVersion(configBean.getVersion());
+            appPreferences.putObject(PreferenceKey.CREDENTIAL_KEY, returnCredentialBean);
+            thisCredentialBean = returnCredentialBean;
+            return returnCredentialBean;
+        } else {
+            Toast.makeText(context, "获取应用凭证失败", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+    }
+
+    /**
+     * 获取资源地址
+     * @return
+     */
+    public Map<String, AddressResponseBean> getResourceAddressList(CredentialBean credentialBean) {
+
+        if (addressMap != null && addressMap.size() > 0) {
+            return addressMap;
+        }
+
+        Type type = new TypeToken<Map<String, AddressResponseBean>>() {}.getType();
+
+        addressMap = appPreferences.getObject(PreferenceKey.ADDRESS_LIST_KEY, type);
+        if (addressMap != null || addressMap.size() > 0) {
+            return addressMap;
+        }
+
+        Uri uri = Uri.parse(ADDRESS_URI);
 
         Bundle params = new Bundle();
-        String messageId = getMessageId();
+        String messageId = "100002";
         params.putString("messageId", messageId);
-        params.putString("version", configBean.getVersion());
-        params.putString("appId", configBean.getAppId());
-        params.putString("orgId", configBean.getOrgId());
-        params.putString("networkAreaCode", configBean.getNetworkAreaCode());
-        params.putString("packageName", configBean.getPackageName());
+        params.putString("version", credentialBean.getVersion());
+        params.putString("appCredential", credentialBean.getAppCredential());
 
-        Bundle bundle = context.getContentResolver().call(uri, "", null, params);
+        Bundle callBack = context.getContentResolver().call(uri, "", null, params);
 
-        if (bundle == null) {
-            Toast.makeText(context, "获取应用凭证失败", Toast.LENGTH_SHORT).show();
-            return;
+        if (callBack == null) {
+            Toast.makeText(context, "获取应用资源地址失败", Toast.LENGTH_SHORT).show();
+            return null;
         }
 
-        if (messageId.equals(bundle.getString("messageId"))) {
-            String appCredential = bundle.getString("appCredential");
-            String userCredential = bundle.getString("userCredential");
+        if (messageId.equals(callBack.getString("messageId"))) {
 
+            String resourceList = callBack.getString("resourceList");
+            int resultCode = callBack.getInt("resultCode");
+            if (resultCode == 0) {
+                //寻址成功
+                List<AddressResponseBean> addressResponseBeanList = gson.fromJson(resourceList, type);
+
+                for (AddressResponseBean addressResponseBean : addressResponseBeanList) {
+                    addressMap.put(addressResponseBean.getResourceId(), addressResponseBean);
+                }
+
+                appPreferences.putObject(PreferenceKey.ADDRESS_LIST_KEY, addressMap);
+                return addressMap;
+            }
         }
 
+        Toast.makeText(context, "获取应用资源地址失败", Toast.LENGTH_SHORT).show();
+        return null;
     }
 
-    private String getMessageId() {
-        return UUID.randomUUID().toString();
+    public CredentialBean getThisCredentialBean() {
+        return thisCredentialBean;
     }
 
+    public Map<String, AddressResponseBean> getAddressMap() {
+        return addressMap;
+    }
+
+
+    public void setConfigFile(ConfigFileBean configFileBean) {
+        this.configFileBean = configFileBean;
+    }
+
+    public ConfigFileBean getConfigFileBean() {
+        return configFileBean;
+    }
 }

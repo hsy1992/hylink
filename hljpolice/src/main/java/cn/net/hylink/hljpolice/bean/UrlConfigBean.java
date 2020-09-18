@@ -12,6 +12,24 @@ public class UrlConfigBean {
     private String orgId;
     private String networkAreaCode;
     private String packageName;
+    private String regionalismCode;
+    private String networkCode;
+
+    public String getNetworkCode() {
+        return networkCode;
+    }
+
+    public void setNetworkCode(String networkCode) {
+        this.networkCode = networkCode;
+    }
+
+    public String getRegionalismCode() {
+        return regionalismCode;
+    }
+
+    public void setRegionalismCode(String regionalismCode) {
+        this.regionalismCode = regionalismCode;
+    }
 
     public String getVersion() {
         return version;
@@ -33,53 +51,25 @@ public class UrlConfigBean {
         return packageName;
     }
 
-    public static final class UrlConfigBeanBuilder {
-        private String version;
-        private String appId;
-        private String orgId;
-        private String networkAreaCode;
-        private String packageName;
 
-        private UrlConfigBeanBuilder() {
-        }
-
-        public static UrlConfigBeanBuilder anUrlConfigBean() {
-            return new UrlConfigBeanBuilder();
-        }
-
-        public UrlConfigBeanBuilder withVersion(String version) {
-            this.version = version;
-            return this;
-        }
-
-        public UrlConfigBeanBuilder withAppId(String appId) {
-            this.appId = appId;
-            return this;
-        }
-
-        public UrlConfigBeanBuilder withOrgId(String orgId) {
-            this.orgId = orgId;
-            return this;
-        }
-
-        public UrlConfigBeanBuilder withNetworkAreaCode(String networkAreaCode) {
-            this.networkAreaCode = networkAreaCode;
-            return this;
-        }
-
-        public UrlConfigBeanBuilder withPackageName(String packageName) {
-            this.packageName = packageName;
-            return this;
-        }
-
-        public UrlConfigBean build() {
-            UrlConfigBean urlConfigBean = new UrlConfigBean();
-            urlConfigBean.appId = this.appId;
-            urlConfigBean.orgId = this.orgId;
-            urlConfigBean.packageName = this.packageName;
-            urlConfigBean.networkAreaCode = this.networkAreaCode;
-            urlConfigBean.version = this.version;
-            return urlConfigBean;
-        }
+    public void setVersion(String version) {
+        this.version = version;
     }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+    public void setNetworkAreaCode(String networkAreaCode) {
+        this.networkAreaCode = networkAreaCode;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
 }
