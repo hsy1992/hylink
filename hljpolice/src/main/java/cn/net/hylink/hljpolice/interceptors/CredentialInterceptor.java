@@ -41,7 +41,7 @@ public class CredentialInterceptor implements Interceptor {
 
     private Gson gson;
 
-    private static final String KEY = "KEY";
+    private static final String KEY = "pd";
 
     private static final String SUCCESS = "200";
 
@@ -75,10 +75,10 @@ public class CredentialInterceptor implements Interceptor {
                 RequestBean requestBean = new RequestBean();
                 RequestBean.ParameterBean parameterBean = new RequestBean.ParameterBean(new RequestBean.ParameterBean.ConditionBean(
                         Arrays.asList(new RequestBean.ParameterBean.ConditionBean.KeyValueListBean(KEY, value))),
-                        addressResponseBean.getResourceId(), KEY, urlConfig.getNetworkCode(), urlConfig.getRegionalismCode());
+                        addressResponseBean.getResourceId(), "data", urlConfig.getNetworkCode(), urlConfig.getRegionalismCode());
                 requestBean.setParameter(parameterBean);
 
-                request = builder.post(RequestBody.create(MEDIA_TYPE, gson.toJson(parameterBean))).build();
+                request = builder.post(RequestBody.create(MEDIA_TYPE, gson.toJson(requestBean))).build();
 
                 //解析返回参数
                 Response response = chain.proceed(request);
@@ -121,7 +121,7 @@ public class CredentialInterceptor implements Interceptor {
             }
         }
 
-        if (! TextUtils.isEmpty(resourceId)) {
+        if (!TextUtils.isEmpty(resourceId)) {
             AddressResponseBean addressBean = CredentialUtil.getInstance().getAddressMap().get(resourceId);
             if (addressBean != null) {
                 map.put(path, addressBean);

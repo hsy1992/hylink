@@ -28,7 +28,7 @@ publish {
     userOrg = 'hylink' //bintray账户下某个组织id
     groupId = rootProject.ext.android.applicationId //maven仓库下库的包名，一般为模块包名
     artifactId = 'hljpolice' //项目名称
-    publishVersion = "0.0.1" //版本号
+    publishVersion = "0.0.8" //版本号
     desc = '' //项目介绍，可以不写
     website = '' //项目主页，可以不写
 }
