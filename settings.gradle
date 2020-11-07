@@ -1,3 +1,4 @@
+include ':library'
 include ':hljtest'
 include ':hljpolice'
 include ':app'

@@ -35,7 +35,9 @@ allprojects {
         maven { url 'https://oss.sonatype.org/content/repositories/public' }
         maven { url "https://jitpack.io" }
         maven { url "https://repo.eclipse.org/content/repositories/paho-releases/"}
-
+        maven {
+            url "http://maven.xdja.com:8081/nexus3/repository/xdja/"
+        }
     }
 }
 

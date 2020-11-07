@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.xdja.reckon.ReckonAgent;
+import com.xdja.reckon.function.StateListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +25,7 @@ import cn.net.hylink.hljpolice.bean.AddressResponseBean;
 import cn.net.hylink.hljpolice.bean.ConfigFileBean;
 import cn.net.hylink.hljpolice.bean.CredentialBean;
 import cn.net.hylink.hljpolice.bean.UrlConfigBean;
+import cn.net.hylink.hljpolice.bean.UserInfoDetailBean;
 
 /**
  * @author haosiyuan
@@ -122,6 +125,18 @@ public class CredentialUtil {
             returnCredentialBean.setPackageName(configBean.getPackageName());
             returnCredentialBean.setVersion(configBean.getVersion());
             thisCredentialBean = returnCredentialBean;
+
+            UserInfoDetailBean userInfoDetailBean = gson.fromJson(userCredential, UserInfoDetailBean.class);
+            ReckonAgent.getInstance(context)
+                    .config("20.20.1.40", "8090")
+                    .startAnalytics(userInfoDetailBean.getCredential().getLoad().getUserInfo().getUserId())
+                    .addStateListener(new StateListener() {
+                        @Override
+                        public void reportState(String state) {
+                            Log.e(">>>>", "reportState: " + state);
+                        }
+                    });
+            ReckonAgent.getInstance(context).stopAnalytics();
             return returnCredentialBean;
         } else {
             toast("获取应用凭证失败");

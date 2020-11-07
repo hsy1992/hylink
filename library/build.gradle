@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+//./gradlew clean build bintrayUpload -PbintrayUser=haosiyuan -PbintrayKey=16e4099363839f8f3611b7b522d49fe4fbbc1095 -PdryRun=false
+publish {
+    userOrg = 'hylink' //bintray账户下某个组织id
+    groupId = 'com.flyingpigeon.library' //maven仓库下库的包名，一般为模块包名
+    artifactId = 'hljflying' //项目名称
+    publishVersion = "0.0.3" //版本号
+    desc = '' //项目介绍，可以不写
+    website = '' //项目主页，可以不写
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.github.Justson:dispatch-queue:v1.0.4'
+    testImplementation 'junit:junit:4.12'
+}
