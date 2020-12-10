@@ -33,21 +33,9 @@ import cn.net.hylink.common.database.entity.SpanResultEntity;
         exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
-    private static volatile AppDatabase INSTANCE;
 
     public static AppDatabase getInstance(Context context) {
-        if (INSTANCE == null) {
-            synchronized (AppDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, Environment.getExternalStorageDirectory() + "/span.db")
-                            .addMigrations(MIGRATION_1_4, MIGRATION_2_4, MIGRATION_3_4)
-                            .allowMainThreadQueries()
-                            .build();
-                }
-            }
-        }
-        return INSTANCE;
+        return AppDatabaseManager.getInstance(context);
     }
 
     static final Migration MIGRATION_1_4 = new Migration(1, 4) {

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 
 android {
 
@@ -23,14 +23,14 @@ android {
 }
 
 //./gradlew clean build bintrayUpload -PbintrayUser=haosiyuan -PbintrayKey=16e4099363839f8f3611b7b522d49fe4fbbc1095 -PdryRun=false
-publish {
-    userOrg = 'hylink' //bintray账户下某个组织id
-    groupId = 'com.flyingpigeon.library' //maven仓库下库的包名，一般为模块包名
-    artifactId = 'hljflying' //项目名称
-    publishVersion = "0.0.3" //版本号
-    desc = '' //项目介绍，可以不写
-    website = '' //项目主页，可以不写
-}
+//publish {
+//    userOrg = 'hylink' //bintray账户下某个组织id
+//    groupId = 'com.flyingpigeon.library' //maven仓库下库的包名，一般为模块包名
+//    artifactId = 'hljflying' //项目名称
+//    publishVersion = "0.0.3" //版本号
+//    desc = '' //项目介绍，可以不写
+//    website = '' //项目主页，可以不写
+//}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
