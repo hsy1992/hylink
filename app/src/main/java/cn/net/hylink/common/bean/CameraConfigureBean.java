@@ -102,13 +102,23 @@ public class CameraConfigureBean {
         private String user;
         private String password;
         private String rtsp;
+        private String code;
 
-        public CloudBean(String ip, int port, String user, String password, String rtsp) {
+        public CloudBean(String ip, int port, String user, String password, String rtsp, String code) {
             this.ip = ip;
             this.port = port;
             this.user = user;
             this.password = password;
             this.rtsp = rtsp;
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
         }
 
         public String getRtsp() {
