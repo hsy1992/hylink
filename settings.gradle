@@ -1,3 +1,4 @@
+include ':wuhai'
 include ':library'
 include ':hljtest'
 include ':hljpolice'
