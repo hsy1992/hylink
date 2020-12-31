@@ -26,5 +26,4 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.lzy.net:okgo:3.0.4'
     implementation project(path: ':hljpolice')
-    implementation project(path: ':wuhai')
 }

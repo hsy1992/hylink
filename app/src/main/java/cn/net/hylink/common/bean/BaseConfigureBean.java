@@ -67,4 +67,16 @@ public class BaseConfigureBean {
     public void setNAME(String NAME) {
         this.NAME = NAME;
     }
+
+    @Override
+    public String toString() {
+        return "BaseConfigureBean{" +
+                "_id=" + _id +
+                ", URL='" + URL + '\'' +
+                ", CAR_NO='" + CAR_NO + '\'' +
+                ", CODE='" + CODE + '\'' +
+                ", NAME='" + NAME + '\'' +
+                ", MQTT_URL='" + MQTT_URL + '\'' +
+                '}';
+    }
 }

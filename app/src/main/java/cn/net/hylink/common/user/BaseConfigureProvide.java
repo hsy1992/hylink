@@ -6,6 +6,7 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import cn.net.hylink.common.bean.BaseConfigureBean;
 import cn.net.hylink.common.constants.ProvideUrl;
@@ -46,7 +47,7 @@ public class BaseConfigureProvide {
                     new ContentObserver(new Handler(Looper.getMainLooper())) {
                 @Override
                 public void onChange(boolean selfChange) {
-                    final Cursor cursor = contentResolver.query(ProvideUrl.USER_CONTENT_URI,
+                    final Cursor cursor = contentResolver.query(ProvideUrl.CONTENT_URI_URL,
                             null,null,null,null);
                     setUserInfo(cursor);
                 }
@@ -59,6 +60,7 @@ public class BaseConfigureProvide {
     private void setUserInfo(Cursor cursor) {
         if (cursor != null) {
             baseConfigureBean = CursorToBeanUtil.cursor2Model(cursor, BaseConfigureBean.class);
+            Log.i("BaseConfigureProvide", baseConfigureBean.toString());
         }
     }
 }
