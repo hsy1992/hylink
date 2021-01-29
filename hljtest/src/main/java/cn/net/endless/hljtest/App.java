@@ -8,6 +8,7 @@ import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+//import cn.net.hylink.wuhai.WuHaiInterceptor;
 import okhttp3.OkHttpClient;
 
 /**
@@ -26,6 +27,7 @@ public class App extends Application {
             loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);
             loggingInterceptor.setColorLevel(Level.INFO);
             OkHttpClient builder = new OkHttpClient.Builder()
+//                    .addInterceptor(new WuHaiInterceptor(this))
                     .addInterceptor(loggingInterceptor)
                     .readTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)
                     .connectTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)

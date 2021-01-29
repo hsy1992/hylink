@@ -60,7 +60,9 @@ public class BaseConfigureProvide {
     private void setUserInfo(Cursor cursor) {
         if (cursor != null) {
             baseConfigureBean = CursorToBeanUtil.cursor2Model(cursor, BaseConfigureBean.class);
-            Log.i("BaseConfigureProvide", baseConfigureBean.toString());
+            if (baseConfigureBean != null) {
+                Log.i("BaseConfigureProvide", baseConfigureBean.toString());
+            }
         }
     }
 }

@@ -49,7 +49,7 @@ class FileUtil {
             fileWriter = new FileWriter(file);
             fileWriter.write("");
             jsonObject.put("appToken", wuHaiConfig.getAppToken());
-            jsonObject.put("date", wuHaiConfig.getAppToken());
+            jsonObject.put("date", wuHaiConfig.getDate());
 
             fileWriter.write(jsonObject.toString());
             fileWriter.flush();

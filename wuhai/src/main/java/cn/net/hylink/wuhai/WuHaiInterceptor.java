@@ -64,13 +64,17 @@ public class WuHaiInterceptor implements Interceptor {
         Request request = chain.request();
 
         if (DataUtil.getSignData(context) == null) {
-            return new Response.Builder()
-                    .code(500)
-                    .message("未登录")
-                    .protocol(Protocol.HTTP_2)
-                    .body(ResponseBody.create(MediaType.get("application/json; charset=utf-8"), ""))
-                    .request(chain.request())
-                    .build();
+//            return new Response.Builder()
+//                    .code(500)
+//                    .message("未登录")
+//                    .protocol(Protocol.HTTP_2)
+//                    .body(ResponseBody.create(MediaType.get("application/json; charset=utf-8"), ""))
+//                    .request(chain.request())
+//                    .build();
+
+            //未登录使用默认token
+            DataUtil.userEntity = new UserBean();
+            DataUtil.userEntity.setKqrbm("030163");
         }
 
         if (appToken == null || "".equals(appToken)) {
@@ -138,7 +142,7 @@ public class WuHaiInterceptor implements Interceptor {
 
         WuHaiConfig wuHaiConfig = new WuHaiConfig();
         wuHaiConfig.setAppToken(appToken);
-        wuHaiConfig.setDate(String.valueOf(issuedAt));
+        wuHaiConfig.setDate(String.valueOf(issuedAt.getTime()));
         return wuHaiConfig;
     }
 

@@ -21,18 +21,18 @@ public class DataUtil {
 
     public static final String AUTHORITY = "com.login.provider.LoginContentProvider";
     public static final Uri CONTENT_URI_FIRST = Uri.parse("content://" + AUTHORITY + "/first");
-    private static UserBean userEntity;
+    public static UserBean userEntity;
 
     public static UserBean getSignData(Context context) {
-//        if (userEntity == null) {
-        Cursor cursor = context.getApplicationContext().getContentResolver().query(CONTENT_URI_FIRST, null,
-                null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            userEntity = cursor2Model(cursor, UserBean.class);
-        } else {
-            userEntity = null;
+        if (userEntity == null) {
+            Cursor cursor = context.getApplicationContext().getContentResolver().query(CONTENT_URI_FIRST, null,
+                    null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                userEntity = cursor2Model(cursor, UserBean.class);
+            } else {
+                userEntity = null;
+            }
         }
-//        }
         return userEntity;
     }
 
