@@ -48,6 +48,8 @@ public class WuHaiInterceptor implements Interceptor {
     public static final String AUTHORITY = "com.login.provider.LoginContentProvider";
     public static final Uri CONTENT_URI_FIRST = Uri.parse("content://" + AUTHORITY + "/first");
 
+    private static final String DEFAULT_CODE = "030163";
+
     public WuHaiInterceptor(Context context) {
         this.context = context.getApplicationContext();
         try {
@@ -74,7 +76,7 @@ public class WuHaiInterceptor implements Interceptor {
 
             //未登录使用默认token
             DataUtil.userEntity = new UserBean();
-            DataUtil.userEntity.setKqrbm("030163");
+            DataUtil.userEntity.setKqrbm(DEFAULT_CODE);
         }
 
         if (appToken == null || "".equals(appToken)) {
@@ -89,7 +91,7 @@ public class WuHaiInterceptor implements Interceptor {
                     JSONObject jsonObject = new JSONObject(json);
                     String appToken = jsonObject.getString("appToken");
                     String date = jsonObject.getString("date");
-                    if (Long.parseLong(date) < System.currentTimeMillis() - 24 * 60 * 60 * 1000L) {
+                    if (Long.parseLong(date) + 24 * 60 * 60 * 1000L > System.currentTimeMillis() ) {
                         this.appToken = appToken;
                     } else {
                         updateAppToken();
@@ -106,7 +108,7 @@ public class WuHaiInterceptor implements Interceptor {
                     .code(500)
                     .message("未登录")
                     .protocol(Protocol.HTTP_2)
-                    .body(ResponseBody.create(MediaType.get("application/json; charset=utf-8"), ""))
+                    .body(ResponseBody.create(MediaType.parse("application/json; charset=utf-8"), ""))
                     .request(chain.request())
                     .build();
 
