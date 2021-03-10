@@ -53,6 +53,6 @@ public interface SpanResultDao {
      * 根据时间查找数量
      * @return
      */
-    @Query("SELECT COUNT(id) FROM tb_span_result WHERE time > :startTime AND time < :endTime")
-    int loadSpanCountByTime(long startTime, long endTime);
+    @Query("SELECT COUNT(id) FROM tb_span_result WHERE type = :type AND time > :startTime AND time < :endTime")
+    int loadSpanCountByTime(int type, long startTime, long endTime);
 }
