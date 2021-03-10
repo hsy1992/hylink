@@ -54,7 +54,7 @@ public class CameraUtil {
         CaptureEntity captureType = AppDatabase.getInstance(context).getCaptureDao().getCaptureEntity();
 
         if (captureType == null) {
-            Toast.makeText(context, "抓拍未配置", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "抓拍未配置", Toast.LENGTH_SHORT).show();
             return;
         } else if (captureType.getType() == Constants.HYLINK1) {
             String content = captureType.getContent();

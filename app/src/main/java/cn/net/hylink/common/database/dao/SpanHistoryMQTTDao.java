@@ -27,4 +27,13 @@ public interface SpanHistoryMQTTDao {
      */
     @Insert
     void insert(SpanHistoryMQTTEntity... data);
+
+    /**
+     * @param data
+     */
+    @Insert
+    long insert(SpanHistoryMQTTEntity data);
+
+    @Query("SELECT * FROM TB_MQTT_SPAN WHERE id = :id")
+    SpanHistoryMQTTEntity findSpanHistoryById(long id);
 }
