@@ -1,3 +1,4 @@
+include ':epsprint'
 include ':wuhai'
 include ':library'
 include ':hljtest'

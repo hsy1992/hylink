@@ -23,8 +23,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
     implementation 'com.lzy.net:okgo:3.0.4'
+    implementation project(path: ':epsprint')
+//    implementation 'cn.net.hylink:wuhai:0.0.8'
 //    implementation project(path: ':hljpolice')
-//    implementation project(path: ':wuhai')
 }

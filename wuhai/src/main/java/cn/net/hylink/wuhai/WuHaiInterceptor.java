@@ -3,6 +3,7 @@ package cn.net.hylink.wuhai;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Base64;
@@ -35,6 +36,8 @@ import okhttp3.ResponseBody;
  * info :
  */
 public class WuHaiInterceptor implements Interceptor {
+
+    public static final String TAG = WuHaiInterceptor.class.getSimpleName();
 
     private File file = new File(Environment.getExternalStorageDirectory() + "/wuhai.config");
 
@@ -81,7 +84,10 @@ public class WuHaiInterceptor implements Interceptor {
 
         if (appToken == null || "".equals(appToken)) {
 
+            Log.i(TAG, "appToken == null");
+
             if (! file.exists()) {
+                Log.i(TAG, "file.exists()---" + file.exists());
                 file.createNewFile();
                 updateAppToken();
             } else {
@@ -93,6 +99,7 @@ public class WuHaiInterceptor implements Interceptor {
                     String date = jsonObject.getString("date");
                     if (Long.parseLong(date) + 24 * 60 * 60 * 1000L > System.currentTimeMillis() ) {
                         this.appToken = appToken;
+                        Log.i(TAG, "复用---token" + appToken);
                     } else {
                         updateAppToken();
                     }
@@ -101,6 +108,8 @@ public class WuHaiInterceptor implements Interceptor {
                     updateAppToken();
                 }
             }
+        } else {
+            Log.i(TAG, "复用---token" + appToken);
         }
 
         if (appToken == null || "".equals(appToken)) {
@@ -123,6 +132,7 @@ public class WuHaiInterceptor implements Interceptor {
 
     private void updateAppToken() {
         if (DataUtil.getSignData(context) != null) {
+            Log.i(TAG, "更新---token" + appToken);
             WuHaiConfig wuHaiConfig = createConfig(DataUtil.getSignData(context).getKqrbm());
             this.appToken = wuHaiConfig.getAppToken();
             FileUtil.writeFile(file, wuHaiConfig);
@@ -132,19 +142,25 @@ public class WuHaiInterceptor implements Interceptor {
     private WuHaiConfig createConfig(String userName) {
         Calendar calendar = Calendar.getInstance();
         Date issuedAt = new Date();
+        Calendar issuedAtCalendar = Calendar.getInstance();
+        issuedAtCalendar.setTime(issuedAt);
+        issuedAtCalendar.add(Calendar.MINUTE, -30);
+
         calendar.setTime(issuedAt);
         calendar.add(Calendar.DATE, 3);
         String appToken = "";
         Date expiresAt = calendar.getTime();
         try {
-            appToken = createAppToken("0QuQw6Zj", "e60bd52ac43e4e76a4988f4c40c44f7a", userName, "1", "2", "2", issuedAt, expiresAt);
+            appToken = createAppToken("0QuQw6Zj", "e60bd52ac43e4e76a4988f4c40c44f7a", userName,
+                    "1", "2", "2", issuedAtCalendar.getTime(), expiresAt);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         WuHaiConfig wuHaiConfig = new WuHaiConfig();
         wuHaiConfig.setAppToken(appToken);
-        wuHaiConfig.setDate(String.valueOf(issuedAt.getTime()));
+        wuHaiConfig.setDate(String.valueOf(issuedAtCalendar.getTime().getTime()));
+        Log.i(TAG, "issuedAtTime:" + issuedAtCalendar.getTime().getTime());
         return wuHaiConfig;
     }
 
@@ -170,7 +186,6 @@ public class WuHaiInterceptor implements Interceptor {
         return appToken;
     }
 
-
     private class DataObserver extends ContentObserver {
 
         public DataObserver() {
@@ -183,6 +198,5 @@ public class WuHaiInterceptor implements Interceptor {
             DataUtil.refreshData(context);
             updateAppToken();
         }
-
     }
 }
