@@ -39,8 +39,14 @@ public class SpanResultEntity {
 
     private String ip;
 
-    public SpanResultEntity(int type, String picPath, String carNum,
-                            String cameraName, long time, String address, String ip) {
+    /**
+     * 0 未关注 1 已关注
+     */
+    private Integer attention;
+
+    public SpanResultEntity(int id, int type, String picPath, String carNum, String cameraName, long time,
+                            String address, String ip, Integer attention) {
+        this.id = id;
         this.type = type;
         this.picPath = picPath;
         this.carNum = carNum;
@@ -48,6 +54,15 @@ public class SpanResultEntity {
         this.time = time;
         this.address = address;
         this.ip = ip;
+        this.attention = attention;
+    }
+
+    public Integer getAttention() {
+        return attention;
+    }
+
+    public void setAttention(Integer attention) {
+        this.attention = attention;
     }
 
     public String getIp() {

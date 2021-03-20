@@ -78,34 +78,23 @@ public class ClientBoxmenImpl implements ClientBoxmen<Bundle, Bundle, Object> {
                 handler.apply((Byte) args[i], key, bundle);
             } else if (byte[].class.isAssignableFrom(typeClazz)) {
                 byte[] array = (byte[]) args[i];
-                if (array.length > 8 * 1024) {
-                    String keyLength = key + PIGEON_KEY_ARRAY_LENGTH;
-                    ParcelFileDescriptor parcelFileDescriptor = Ashmem.byteArrayToFileDescriptor(array);
-                    bundle.putInt(keyLength, array.length);
-                    ParameterHandler.ParcelableHandler handler = (ParameterHandler.ParcelableHandler) map.get(Parcelable.class);
-                    assert handler != null;
-                    handler.apply(parcelFileDescriptor, key, bundle);
-                    Parcelable parcelable = bundle.getParcelable(key);
-                } else {
-                    ParameterHandler.ByteArrayHandler byteArrayHandler = (ParameterHandler.ByteArrayHandler) map.get(byte[].class);
-                    byteArrayHandler.apply(array, key, bundle);
-                }
+                String keyLength = key + PIGEON_KEY_ARRAY_LENGTH;
+                ParcelFileDescriptor parcelFileDescriptor = Ashmem.byteArrayToFileDescriptor(array);
+                bundle.putInt(keyLength, array.length);
+                ParameterHandler.ParcelableHandler handler = (ParameterHandler.ParcelableHandler) map.get(Parcelable.class);
+                assert handler != null;
+                handler.apply(parcelFileDescriptor, key, bundle);
+                Parcelable parcelable = bundle.getParcelable(key);
 
             } else if (Byte[].class.isAssignableFrom(typeClazz)) {
                 byte[] array = Utils.toPrimitives((Byte[]) args[i]);
-                if (array.length > 8 * 1024) {
-                    ParcelFileDescriptor parcelFileDescriptor = Ashmem.byteArrayToFileDescriptor(array);
-                    String keyLength = key + PIGEON_KEY_ARRAY_LENGTH;
-                    bundle.putInt(keyLength, array.length);
-                    ParameterHandler.ParcelableHandler handler = (ParameterHandler.ParcelableHandler) map.get(Parcelable.class);
-                    assert handler != null;
-                    handler.apply(parcelFileDescriptor, key, bundle);
-                    Parcelable parcelable = bundle.getParcelable(key);
-                } else {
-                    ParameterHandler.ByteArrayHandler byteArrayHandler = (ParameterHandler.ByteArrayHandler) map.get(byte[].class);
-                    byteArrayHandler.apply(array, key, bundle);
-                }
-
+                ParcelFileDescriptor parcelFileDescriptor = Ashmem.byteArrayToFileDescriptor(array);
+                String keyLength = key + PIGEON_KEY_ARRAY_LENGTH;
+                bundle.putInt(keyLength, array.length);
+                ParameterHandler.ParcelableHandler handler = (ParameterHandler.ParcelableHandler) map.get(Parcelable.class);
+                assert handler != null;
+                handler.apply(parcelFileDescriptor, key, bundle);
+                Parcelable parcelable = bundle.getParcelable(key);
             } else if (boolean.class.isAssignableFrom(typeClazz)) {
                 ParameterHandler.BooleanHandler handler = (ParameterHandler.BooleanHandler) map.get(boolean.class);
                 assert handler != null;

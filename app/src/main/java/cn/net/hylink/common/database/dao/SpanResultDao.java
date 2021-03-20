@@ -26,6 +26,12 @@ public interface SpanResultDao {
     Flowable<List<SpanResultEntity>> loadSpanResult();
 
     /**
+     * 根据时间查找数据 关注
+     */
+    @Query("SELECT * FROM tb_span_result WHERE time > :startTime AND time < :endTime AND attention =:attention ORDER BY time DESC LIMIT :pageNo, :pageSize")
+    Flowable<List<SpanResultEntity>> loadSpanResult(int pageNo, int pageSize, long startTime, long endTime, int attention);
+
+    /**
      * 根据时间查找数据
      */
     @Query("SELECT * FROM tb_span_result WHERE time > :startTime AND time < :endTime ORDER BY time DESC LIMIT :pageNo, :pageSize")
