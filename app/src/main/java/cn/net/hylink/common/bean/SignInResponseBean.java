@@ -1,7 +1,5 @@
 package cn.net.hylink.common.bean;
 
-import java.util.List;
-
 /**
  * @author haosiyuan
  * @date 2020-03-27 15:33
@@ -10,194 +8,96 @@ import java.util.List;
 public class SignInResponseBean {
 
     /**
-     * reason : null
-     * result : {"list":[{"xh":1,"user_id":"230125199209250518","gxdwdm":"230000000000","gxdwmc":"黑龙江省","kqrbm":"33222006","kqrxm":"张泽恒","rltpdz":"http://192.168.41.249:9000/img/2,05573a8dc7fd20","idcard":"230125199209250518","sign_identification":"qd","sign_time":"2019-12-12 11:20:30","imei":"tempHylinkCid","carno":"黑A66666","effective":"1","lat":"0","lon":"0"}]}
+     * gxdwdm : 350203750000
+     * bs : 签到
+     * djsj : 2020-10-12 10:24:12
+     * gxdwmc : 思明分局开元派出所
+     * kqrxm : 张泽恒
+     * rltpdz : http://44.64.18.28:82/czyth/androidserver/showimg.jsp?xlh=cs9991
+     * sunit_level : 4
+     * kqrbm : cs9991
+     * picture_url : http://173.16.1.4:82/ftpOuter/wx/ftp/ftp_forward2.jsp?url=http://44.64.18.28:82/&jspname=czyth/androidserver/showimg.jsp&jrpt_showimg=1&xlh=cs9991
      */
 
-    private Object reason;
-    private ResultBean result;
+    private String gxdwdm;
+    private String bs;
+    private String djsj;
+    private String gxdwmc;
+    private String kqrxm;
+    private String rltpdz;
+    private String sunit_level;
+    private String kqrbm;
+    private String picture_url;
 
-    public Object getReason() {
-        return reason;
+    public String getGxdwdm() {
+        return gxdwdm;
     }
 
-    public void setReason(Object reason) {
-        this.reason = reason;
+    public void setGxdwdm(String gxdwdm) {
+        this.gxdwdm = gxdwdm;
     }
 
-    public ResultBean getResult() {
-        return result;
+    public String getBs() {
+        return bs;
     }
 
-    public void setResult(ResultBean result) {
-        this.result = result;
+    public void setBs(String bs) {
+        this.bs = bs;
     }
 
-    public static class ResultBean {
-        private List<ListBean> list;
+    public String getDjsj() {
+        return djsj;
+    }
 
-        public List<ListBean> getList() {
-            return list;
-        }
+    public void setDjsj(String djsj) {
+        this.djsj = djsj;
+    }
 
-        public void setList(List<ListBean> list) {
-            this.list = list;
-        }
+    public String getGxdwmc() {
+        return gxdwmc;
+    }
 
-        public static class ListBean {
-            /**
-             * xh : 1
-             * user_id : 230125199209250518
-             * gxdwdm : 230000000000
-             * gxdwmc : 黑龙江省
-             * kqrbm : 33222006
-             * kqrxm : 张泽恒
-             * rltpdz : http://192.168.41.249:9000/img/2,05573a8dc7fd20
-             * idcard : 230125199209250518
-             * sign_identification : qd
-             * sign_time : 2019-12-12 11:20:30
-             * imei : tempHylinkCid
-             * carno : 黑A66666
-             * effective : 1
-             * lat : 0
-             * lon : 0
-             */
+    public void setGxdwmc(String gxdwmc) {
+        this.gxdwmc = gxdwmc;
+    }
 
-            private int xh;
-            private String user_id;
-            private String gxdwdm;
-            private String gxdwmc;
-            private String kqrbm;
-            private String kqrxm;
-            private String rltpdz;
-            private String idcard;
-            private String sign_identification;
-            private String sign_time;
-            private String imei;
-            private String carno;
-            private String effective;
-            private String lat;
-            private String lon;
+    public String getKqrxm() {
+        return kqrxm;
+    }
 
-            public int getXh() {
-                return xh;
-            }
+    public void setKqrxm(String kqrxm) {
+        this.kqrxm = kqrxm;
+    }
 
-            public void setXh(int xh) {
-                this.xh = xh;
-            }
+    public String getRltpdz() {
+        return rltpdz;
+    }
 
-            public String getUser_id() {
-                return user_id;
-            }
+    public void setRltpdz(String rltpdz) {
+        this.rltpdz = rltpdz;
+    }
 
-            public void setUser_id(String user_id) {
-                this.user_id = user_id;
-            }
+    public String getSunit_level() {
+        return sunit_level;
+    }
 
-            public String getGxdwdm() {
-                return gxdwdm;
-            }
+    public void setSunit_level(String sunit_level) {
+        this.sunit_level = sunit_level;
+    }
 
-            public void setGxdwdm(String gxdwdm) {
-                this.gxdwdm = gxdwdm;
-            }
+    public String getKqrbm() {
+        return kqrbm;
+    }
 
-            public String getGxdwmc() {
-                return gxdwmc;
-            }
+    public void setKqrbm(String kqrbm) {
+        this.kqrbm = kqrbm;
+    }
 
-            public void setGxdwmc(String gxdwmc) {
-                this.gxdwmc = gxdwmc;
-            }
+    public String getPicture_url() {
+        return picture_url;
+    }
 
-            public String getKqrbm() {
-                return kqrbm;
-            }
-
-            public void setKqrbm(String kqrbm) {
-                this.kqrbm = kqrbm;
-            }
-
-            public String getKqrxm() {
-                return kqrxm;
-            }
-
-            public void setKqrxm(String kqrxm) {
-                this.kqrxm = kqrxm;
-            }
-
-            public String getRltpdz() {
-                return rltpdz;
-            }
-
-            public void setRltpdz(String rltpdz) {
-                this.rltpdz = rltpdz;
-            }
-
-            public String getIdcard() {
-                return idcard;
-            }
-
-            public void setIdcard(String idcard) {
-                this.idcard = idcard;
-            }
-
-            public String getSign_identification() {
-                return sign_identification;
-            }
-
-            public void setSign_identification(String sign_identification) {
-                this.sign_identification = sign_identification;
-            }
-
-            public String getSign_time() {
-                return sign_time;
-            }
-
-            public void setSign_time(String sign_time) {
-                this.sign_time = sign_time;
-            }
-
-            public String getImei() {
-                return imei;
-            }
-
-            public void setImei(String imei) {
-                this.imei = imei;
-            }
-
-            public String getCarno() {
-                return carno;
-            }
-
-            public void setCarno(String carno) {
-                this.carno = carno;
-            }
-
-            public String getEffective() {
-                return effective;
-            }
-
-            public void setEffective(String effective) {
-                this.effective = effective;
-            }
-
-            public String getLat() {
-                return lat;
-            }
-
-            public void setLat(String lat) {
-                this.lat = lat;
-            }
-
-            public String getLon() {
-                return lon;
-            }
-
-            public void setLon(String lon) {
-                this.lon = lon;
-            }
-        }
+    public void setPicture_url(String picture_url) {
+        this.picture_url = picture_url;
     }
 }

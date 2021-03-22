@@ -19,7 +19,7 @@ import cn.net.hylink.common.util.CursorToBeanUtil;
  */
 public class UserInfoProvide {
 
-    private SignInResponseBean.ResultBean.ListBean userInfo;
+    private SignInResponseBean userInfo;
 
     private static volatile UserInfoProvide instance;
 
@@ -37,7 +37,7 @@ public class UserInfoProvide {
 
     private UserInfoProvide() {}
 
-    public SignInResponseBean.ResultBean.ListBean getUserInfo(Context context) {
+    public SignInResponseBean getUserInfo(Context context) {
 
         if (userInfo == null) {
             final ContentResolver contentResolver = context.getApplicationContext().getContentResolver();
@@ -58,7 +58,7 @@ public class UserInfoProvide {
 
     private void setUserInfo(Cursor cursor) {
         if (cursor != null) {
-            userInfo = CursorToBeanUtil.cursor2Model(cursor, SignInResponseBean.ResultBean.ListBean.class);
+            userInfo = CursorToBeanUtil.cursor2Model(cursor, SignInResponseBean.class);
         }
     }
 }
