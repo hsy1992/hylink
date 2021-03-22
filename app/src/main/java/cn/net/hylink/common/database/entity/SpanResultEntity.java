@@ -44,9 +44,8 @@ public class SpanResultEntity {
      */
     private Integer attention;
 
-    public SpanResultEntity(int id, int type, String picPath, String carNum, String cameraName, long time,
+    public SpanResultEntity(int type, String picPath, String carNum, String cameraName, long time,
                             String address, String ip, Integer attention) {
-        this.id = id;
         this.type = type;
         this.picPath = picPath;
         this.carNum = carNum;
