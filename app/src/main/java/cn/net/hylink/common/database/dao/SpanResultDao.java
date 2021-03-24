@@ -52,8 +52,20 @@ public interface SpanResultDao {
     /**
      * 根据时间、类型 查找数据
      */
+    @Query("SELECT * FROM tb_span_result WHERE ip = :cameraIp AND type = :type AND time > :startTime AND time < :endTime AND attention =:attention ORDER BY time DESC LIMIT :pageNo, :pageSize")
+    Flowable<List<SpanResultEntity>> loadSpanResult(String cameraIp, int type, int pageNo, int pageSize, long startTime, long endTime, int attention);
+
+    /**
+     * 根据时间、类型 查找数据
+     */
     @Query("SELECT * FROM tb_span_result WHERE type = :type AND time > :startTime AND time < :endTime ORDER BY time DESC LIMIT :pageNo, :pageSize")
     Flowable<List<SpanResultEntity>> loadSpanResult(int type, int pageNo, int pageSize, long startTime, long endTime);
+
+    /**
+     * 根据时间、类型 查找数据
+     */
+    @Query("SELECT * FROM tb_span_result WHERE type = :type AND time > :startTime AND time < :endTime AND attention =:attention ORDER BY time DESC LIMIT :pageNo, :pageSize")
+    Flowable<List<SpanResultEntity>> loadSpanResult(int type, int pageNo, int pageSize, long startTime, long endTime, int attention);
 
     /**
      * 根据时间、类型 查找数据
