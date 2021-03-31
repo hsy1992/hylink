@@ -103,14 +103,24 @@ public class CameraConfigureBean {
         private String password;
         private String rtsp;
         private String code;
+        private int type;
 
-        public CloudBean(String ip, int port, String user, String password, String rtsp, String code) {
+        public CloudBean(String ip, int port, String user, String password, String rtsp, String code, int type) {
             this.ip = ip;
             this.port = port;
             this.user = user;
             this.password = password;
             this.rtsp = rtsp;
             this.code = code;
+            this.type = type;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
         }
 
         public String getCode() {
