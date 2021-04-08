@@ -28,7 +28,7 @@ import cn.net.hylink.common.database.entity.SpanResultEntity;
  * @date 2020-03-25 17:18
  * info : 数据库
  */
-@Database(version = 5, entities = {SpanResultEntity.class, OtherHistoryMQTTEntity.class, SpanHistoryMQTTEntity.class
+@Database(version = 7, entities = {SpanResultEntity.class, OtherHistoryMQTTEntity.class, SpanHistoryMQTTEntity.class
         , PushSettingEntity.class, PushIpCodeEntity.class, CameraSettingEntity.class, CaptureEntity.class},
         exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
@@ -78,6 +78,21 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
+    static final Migration MIGRATION_5_6 = new Migration(5, 6) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+
+            database.execSQL("ALTER TABLE `tb_span_result` ADD COLUMN `uploadId` TEXT");
+        }
+    };
+
+    static final Migration MIGRATION_6_7 = new Migration(6, 7) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+
+            database.execSQL("ALTER TABLE `tb_span_result` ADD COLUMN `picPathOriginal` TEXT");
+        }
+    };
 
     public abstract PushSettingDao getPushSettingDao();
 

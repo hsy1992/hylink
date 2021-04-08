@@ -44,8 +44,18 @@ public class SpanResultEntity {
      */
     private Integer attention;
 
+    /**
+     * 上传返回的比对id
+     */
+    private String uploadId;
+
+    /**
+     * 原图
+     */
+    private String picPathOriginal;
+
     public SpanResultEntity(int type, String picPath, String carNum, String cameraName, long time,
-                            String address, String ip, Integer attention) {
+                            String address, String ip, Integer attention, String picPathOriginal) {
         this.type = type;
         this.picPath = picPath;
         this.carNum = carNum;
@@ -54,6 +64,23 @@ public class SpanResultEntity {
         this.address = address;
         this.ip = ip;
         this.attention = attention;
+        this.picPathOriginal = picPathOriginal;
+    }
+
+    public String getPicPathOriginal() {
+        return picPathOriginal;
+    }
+
+    public void setPicPathOriginal(String picPathOriginal) {
+        this.picPathOriginal = picPathOriginal;
+    }
+
+    public String getUploadId() {
+        return uploadId;
+    }
+
+    public void setUploadId(String uploadId) {
+        this.uploadId = uploadId;
     }
 
     public Integer getAttention() {

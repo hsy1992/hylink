@@ -26,24 +26,6 @@ public interface SpanResultDao {
     Flowable<List<SpanResultEntity>> loadSpanResult();
 
     /**
-     * 根据时间查找数据 关注
-     */
-    @Query("SELECT * FROM tb_span_result WHERE time > :startTime AND time < :endTime AND attention =:attention ORDER BY time DESC LIMIT :pageNo, :pageSize")
-    Flowable<List<SpanResultEntity>> loadSpanResult(int pageNo, int pageSize, long startTime, long endTime, int attention);
-
-    /**
-     * 根据时间查找数据
-     */
-    @Query("SELECT * FROM tb_span_result WHERE time > :startTime AND time < :endTime ORDER BY time DESC LIMIT :pageNo, :pageSize")
-    Flowable<List<SpanResultEntity>> loadSpanResult(int pageNo, int pageSize, long startTime, long endTime);
-
-    /**
-     * 根据时间、类型 查找数据
-     */
-    @Query("SELECT * FROM tb_span_result WHERE ip = :cameraIp AND type = :type ORDER BY time DESC LIMIT :pageNo, :pageSize")
-    Flowable<List<SpanResultEntity>> loadSpanResult(String cameraIp, int type, int pageNo, int pageSize);
-
-    /**
      * 根据时间、类型 查找数据
      */
     @Query("SELECT * FROM tb_span_result WHERE ip = :cameraIp AND type = :type AND time > :startTime AND time < :endTime ORDER BY time DESC LIMIT :pageNo, :pageSize")
@@ -67,17 +49,15 @@ public interface SpanResultDao {
     @Query("SELECT * FROM tb_span_result WHERE type = :type AND time > :startTime AND time < :endTime AND attention =:attention ORDER BY time DESC LIMIT :pageNo, :pageSize")
     Flowable<List<SpanResultEntity>> loadSpanResult(int type, int pageNo, int pageSize, long startTime, long endTime, int attention);
 
-    /**
-     * 根据时间、类型 查找数据
-     */
-    @Query("SELECT * FROM tb_span_result WHERE type = :type ORDER BY time DESC LIMIT :pageNo, :pageSize")
-    Flowable<List<SpanResultEntity>> loadSpanResult(int type, int pageNo, int pageSize);
 
     @Query("DELETE FROM tb_span_result WHERE picPath IN (:path)")
     void deleteByPath(List<String> path);
 
     @Insert
     void insert(SpanResultEntity... spanResultEntities);
+
+    @Insert
+    long insert(SpanResultEntity spanResultEntities);
 
     /**
      * 根据时间查找数量
@@ -93,4 +73,18 @@ public interface SpanResultDao {
      */
     @Query("UPDATE tb_span_result SET attention = :attention WHERE id = :id")
     void updateAttentionById(int id, int attention);
+
+    /**
+     * 更新上传id
+     * @param id
+     * @param uploadId
+     */
+    @Query("UPDATE tb_span_result SET uploadId = :uploadId WHERE id = :id")
+    void updateUploadIdById(long id, String uploadId);
+
+    /**
+     * 查找未上传数据
+     */
+    @Query("SELECT * FROM tb_span_result WHERE uploadId = :uploadId")
+    Flowable<List<SpanResultEntity>> loadSpanResultNoUpload(String uploadId);
 }
