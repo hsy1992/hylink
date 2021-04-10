@@ -86,5 +86,5 @@ public interface SpanResultDao {
      * 查找未上传数据
      */
     @Query("SELECT * FROM tb_span_result WHERE uploadId = :uploadId")
-    Flowable<List<SpanResultEntity>> loadSpanResultNoUpload(String uploadId);
+    List<SpanResultEntity> loadSpanResultNoUpload(String uploadId);
 }
