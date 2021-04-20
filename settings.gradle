@@ -1,3 +1,5 @@
+include ':flying'
+include ':aidl'
 include ':epsprint'
 include ':wuhai'
 include ':library'
