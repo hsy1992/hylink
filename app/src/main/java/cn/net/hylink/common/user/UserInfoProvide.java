@@ -23,6 +23,8 @@ public class UserInfoProvide {
 
     private static volatile UserInfoProvide instance;
 
+    private boolean hasObserver = false;
+
     public static UserInfoProvide getInstance() {
 
         if (instance == null) {
@@ -37,21 +39,31 @@ public class UserInfoProvide {
 
     private UserInfoProvide() {}
 
-    public SignInResponseBean.ResultBean.ListBean getUserInfo(Context context) {
+    public synchronized SignInResponseBean.ResultBean.ListBean getUserInfo(Context context) {
 
         if (userInfo == null) {
-            final ContentResolver contentResolver = context.getApplicationContext().getContentResolver();
-            final Cursor cursor = contentResolver.query(ProvideUrl.USER_CONTENT_URI,
-                    null,null,null,null);
-            contentResolver.registerContentObserver(ProvideUrl.USER_CONTENT_URI, false, new ContentObserver(new Handler(Looper.getMainLooper())) {
-                @Override
-                public void onChange(boolean selfChange) {
-                    final Cursor cursor = contentResolver.query(ProvideUrl.USER_CONTENT_URI,
-                            null,null,null,null);
-                    setUserInfo(cursor);
+            try {
+                if (hasObserver) {
+                    return userInfo;
                 }
-            });
-            setUserInfo(cursor);
+                final ContentResolver contentResolver = context.getApplicationContext().getContentResolver();
+
+                contentResolver.registerContentObserver(ProvideUrl.USER_CONTENT_URI, false, new ContentObserver(new Handler(Looper.getMainLooper())) {
+                    @Override
+                    public void onChange(boolean selfChange) {
+                        final Cursor cursor = contentResolver.query(ProvideUrl.USER_CONTENT_URI,
+                                null,null,null,null);
+                        setUserInfo(cursor);
+                    }
+                });
+                hasObserver = true;
+                final Cursor cursor = contentResolver.query(ProvideUrl.USER_CONTENT_URI,
+                        null,null,null,null);
+                setUserInfo(cursor);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return userInfo;
     }

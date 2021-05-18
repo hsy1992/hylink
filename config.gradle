@@ -22,11 +22,14 @@ ext {
             rxbindingVersion        : "3.0.0",
     ]
 
+    ktx = [
+            ktx_core: 'androidx.core:core-ktx:1.2.0'
+    ]
 
     retrofit = [
-            retrofit              : "com.squareup.retrofit2:retrofit:$dependVersion.retrofitSdkVersion",
-            retrofitConverterGson : "com.squareup.retrofit2:converter-gson:$dependVersion.retrofitSdkVersion",
-            retrofitAdapterRxjava2: "com.squareup.retrofit2:adapter-rxjava2:$dependVersion.retrofitSdkVersion",
+            retrofit                : "com.squareup.retrofit2:retrofit:$dependVersion.retrofitSdkVersion",
+            retrofitConverterGson   : "com.squareup.retrofit2:converter-gson:$dependVersion.retrofitSdkVersion",
+            retrofitAdapterRxjava2  : "com.squareup.retrofit2:adapter-rxjava2:$dependVersion.retrofitSdkVersion",
             //3.12.0支持Android 2.3+ (API level 9+)
             okhttp3LoggerInterceptor: "com.squareup.okhttp3:logging-interceptor:3.12.0",
     ]
@@ -38,6 +41,7 @@ ext {
     okhttp = [
             okhttp: "com.squareup.okhttp3:okhttp:3.12.0"
     ]
+
 
     rxJava = [
             rxJava                 : "io.reactivex.rxjava2:rxjava:$dependVersion.rxjavaSdkVersion",
@@ -99,7 +103,7 @@ ext {
     ]
     cameraX = [
             camera_camera2  : "androidx.camera:camera-camera2:1.0.0-beta03",
-            camera_lifecycle : "androidx.camera:camera-lifecycle:1.0.0-beta03",
+            camera_lifecycle: "androidx.camera:camera-lifecycle:1.0.0-beta03",
             camera_view     : "androidx.camera:camera-view:1.0.0-alpha10",
     ]
 
@@ -213,7 +217,7 @@ ext {
             free_reflection        : 'me.weishu:free_reflection:1.2.0',
             //卡顿检测
             // 仅在debug包启用BlockCanary进行卡顿监控和提示的话，可以这么用
-            blockcanary_debug      :'com.github.markzhai:blockcanary-android:1.5.0',
+            blockcanary_debug      : 'com.github.markzhai:blockcanary-android:1.5.0',
             blockcanary_release    : 'com.github.markzhai:blockcanary-no-op:1.5.0',
             //哔哩哔哩播放器 https://github.com/Bilibili/ijkplayer
             ijkplayer_java         : 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8',
