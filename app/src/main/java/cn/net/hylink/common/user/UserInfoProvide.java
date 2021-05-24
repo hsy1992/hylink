@@ -6,6 +6,7 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 
 import cn.net.hylink.common.bean.SignInResponseBean;
@@ -40,12 +41,8 @@ public class UserInfoProvide {
     private UserInfoProvide() {}
 
     public synchronized SignInResponseBean.ResultBean.ListBean getUserInfo(Context context) {
-
-        if (userInfo == null) {
+        if (!hasObserver) {
             try {
-                if (hasObserver) {
-                    return userInfo;
-                }
                 final ContentResolver contentResolver = context.getApplicationContext().getContentResolver();
 
                 contentResolver.registerContentObserver(ProvideUrl.USER_CONTENT_URI, false, new ContentObserver(new Handler(Looper.getMainLooper())) {
@@ -56,11 +53,10 @@ public class UserInfoProvide {
                         setUserInfo(cursor);
                     }
                 });
-                hasObserver = true;
                 final Cursor cursor = contentResolver.query(ProvideUrl.USER_CONTENT_URI,
                         null,null,null,null);
                 setUserInfo(cursor);
-
+                hasObserver = true;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -71,6 +67,7 @@ public class UserInfoProvide {
     private void setUserInfo(Cursor cursor) {
         if (cursor != null) {
             userInfo = CursorToBeanUtil.cursor2Model(cursor, SignInResponseBean.ResultBean.ListBean.class);
+            Log.i("UserInfoProvide", userInfo.toString());
         } else {
             userInfo = null;
         }

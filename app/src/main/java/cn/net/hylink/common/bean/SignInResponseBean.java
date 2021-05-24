@@ -198,6 +198,27 @@ public class SignInResponseBean {
             public void setLon(String lon) {
                 this.lon = lon;
             }
+
+            @Override
+            public String toString() {
+                return "ListBean{" +
+                        "xh=" + xh +
+                        ", user_id='" + user_id + '\'' +
+                        ", gxdwdm='" + gxdwdm + '\'' +
+                        ", gxdwmc='" + gxdwmc + '\'' +
+                        ", kqrbm='" + kqrbm + '\'' +
+                        ", kqrxm='" + kqrxm + '\'' +
+                        ", rltpdz='" + rltpdz + '\'' +
+                        ", idcard='" + idcard + '\'' +
+                        ", sign_identification='" + sign_identification + '\'' +
+                        ", sign_time='" + sign_time + '\'' +
+                        ", imei='" + imei + '\'' +
+                        ", carno='" + carno + '\'' +
+                        ", effective='" + effective + '\'' +
+                        ", lat='" + lat + '\'' +
+                        ", lon='" + lon + '\'' +
+                        '}';
+            }
         }
     }
 }

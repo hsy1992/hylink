@@ -23,6 +23,8 @@ public class BaseConfigureProvide {
 
     private static volatile BaseConfigureProvide instance;
 
+    private boolean hasRegister = false;
+
     public static BaseConfigureProvide getInstance() {
 
         if (instance == null) {
@@ -39,20 +41,25 @@ public class BaseConfigureProvide {
 
     public BaseConfigureBean getBaseConfigure(Context context) {
 
-        if (baseConfigureBean == null) {
-            final ContentResolver contentResolver = context.getApplicationContext().getContentResolver();
-            final Cursor cursor = contentResolver.query(ProvideUrl.CONTENT_URI_URL,
-                    null,null,null,null);
-            contentResolver.registerContentObserver(ProvideUrl.CONTENT_URI_URL, false,
-                    new ContentObserver(new Handler(Looper.getMainLooper())) {
-                @Override
-                public void onChange(boolean selfChange) {
-                    final Cursor cursor = contentResolver.query(ProvideUrl.CONTENT_URI_URL,
-                            null,null,null,null);
-                    setUserInfo(cursor);
-                }
-            });
-            setUserInfo(cursor);
+        if (!hasRegister) {
+            try {
+                final ContentResolver contentResolver = context.getApplicationContext().getContentResolver();
+                final Cursor cursor = contentResolver.query(ProvideUrl.CONTENT_URI_URL,
+                        null,null,null,null);
+                contentResolver.registerContentObserver(ProvideUrl.CONTENT_URI_URL, false,
+                        new ContentObserver(new Handler(Looper.getMainLooper())) {
+                            @Override
+                            public void onChange(boolean selfChange) {
+                                final Cursor cursor = contentResolver.query(ProvideUrl.CONTENT_URI_URL,
+                                        null,null,null,null);
+                                setUserInfo(cursor);
+                            }
+                        });
+                setUserInfo(cursor);
+                hasRegister = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return baseConfigureBean;
     }
@@ -63,6 +70,8 @@ public class BaseConfigureProvide {
             if (baseConfigureBean != null) {
                 Log.i("BaseConfigureProvide", baseConfigureBean.toString());
             }
+        } else {
+            baseConfigureBean = null;
         }
     }
 }
