@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import cn.net.hylink.common.bean.CameraConfigureBean;
+import cn.net.hylink.common.bean.ConfigureBean;
 
 /**
  * @author haosiyuan
@@ -45,7 +45,7 @@ public class AssetsUtil {
         }
     }
 
-    public static CameraConfigureBean getAssets(Context context, String path) {
+    public static ConfigureBean getAssets(Context context, String path) {
 
         File model = new File(path);
         Gson gson = new Gson();
@@ -62,14 +62,14 @@ public class AssetsUtil {
                     content.append(line + "\n");
                 }
                 is.close();
-                return gson.fromJson(content.toString(), new TypeToken<CameraConfigureBean>(){}.getType());
+                return gson.fromJson(content.toString(), new TypeToken<ConfigureBean>(){}.getType());
 
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
         } else {
-            return gson.fromJson(getJson(path, context), new TypeToken<CameraConfigureBean>(){}.getType());
+            return gson.fromJson(getJson(path, context), new TypeToken<ConfigureBean>(){}.getType());
         }
     }
 

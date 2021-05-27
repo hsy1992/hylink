@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.net.hylink.common.bean.CameraConfigureBean;
+import cn.net.hylink.common.bean.ConfigureBean;
 import cn.net.hylink.common.constants.Constants;
 import cn.net.hylink.common.database.AppDatabase;
 import cn.net.hylink.common.database.entity.CameraSettingEntity;
@@ -43,13 +43,13 @@ public class CameraUtil {
         gson = new Gson();
     }
 
-    private CameraConfigureBean cameraConfigureBean;
+    private ConfigureBean cameraConfigureBean;
 
-    private List<CameraConfigureBean.CameraListBean> cameraList = new ArrayList<>();
+    private List<ConfigureBean.CameraListBean> cameraList = new ArrayList<>();
 
     public void initData(Context context) {
 
-        cameraConfigureBean = new CameraConfigureBean();
+        cameraConfigureBean = new ConfigureBean();
 
         CaptureEntity captureType = AppDatabase.getInstance(context).getCaptureDao().getCaptureEntity();
 
@@ -60,7 +60,7 @@ public class CameraUtil {
             String content = captureType.getContent();
 
             try {
-                CameraConfigureBean.RedisBean redisBean = gson.fromJson(content, CameraConfigureBean.RedisBean.class);
+                ConfigureBean.RedisBean redisBean = gson.fromJson(content, ConfigureBean.RedisBean.class);
                 cameraConfigureBean.setRedis(redisBean);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -71,7 +71,7 @@ public class CameraUtil {
             String content = captureType.getContent();
 
             try {
-                CameraConfigureBean.SnapBean snapBean = gson.fromJson(content, CameraConfigureBean.SnapBean.class);
+                ConfigureBean.SnapBean snapBean = gson.fromJson(content, ConfigureBean.SnapBean.class);
                 cameraConfigureBean.setSnap(snapBean);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -86,12 +86,12 @@ public class CameraUtil {
             Toast.makeText(context, "摄像头未配置", Toast.LENGTH_SHORT).show();
             return;
         } else {
-            CameraConfigureBean.CloudBean cloudBean = gson.fromJson(cameraSettingEntity.getCloud(),
-                    CameraConfigureBean.CloudBean.class);
-            CameraConfigureBean.CarBean carBean = gson.fromJson(cameraSettingEntity.getCar(),
-                    CameraConfigureBean.CarBean.class);
-            List<CameraConfigureBean.CameraListBean> cameraList = gson.fromJson(cameraSettingEntity.getCameraList(),
-                    new TypeToken<List<CameraConfigureBean.CameraListBean>>(){}.getType());
+            ConfigureBean.CloudBean cloudBean = gson.fromJson(cameraSettingEntity.getCloud(),
+                    ConfigureBean.CloudBean.class);
+            ConfigureBean.CarBean carBean = gson.fromJson(cameraSettingEntity.getCar(),
+                    ConfigureBean.CarBean.class);
+            List<ConfigureBean.CameraListBean> cameraList = gson.fromJson(cameraSettingEntity.getCameraList(),
+                    new TypeToken<List<ConfigureBean.CameraListBean>>(){}.getType());
             cameraConfigureBean.setCloud(cloudBean);
             cameraConfigureBean.setCarBean(carBean);
             cameraConfigureBean.setCameraList(cameraList);
@@ -104,7 +104,7 @@ public class CameraUtil {
         if (cameraList == null || cameraList.size() == 0) {
             return "";
         }
-        for (CameraConfigureBean.CameraListBean key : cameraList) {
+        for (ConfigureBean.CameraListBean key : cameraList) {
             if (key.getIp().equals(cameraIp)) {
                 return key.getName();
             }
@@ -123,7 +123,7 @@ public class CameraUtil {
             return "";
         }
 
-        for (CameraConfigureBean.CameraListBean key : cameraList) {
+        for (ConfigureBean.CameraListBean key : cameraList) {
             if (key.getName().equals(locationName)) {
                 return key.getRtsp();
             }
@@ -131,11 +131,11 @@ public class CameraUtil {
         return "";
     }
 
-    public List<CameraConfigureBean.CameraListBean> getCameraList() {
+    public List<ConfigureBean.CameraListBean> getCameraList() {
         return cameraList;
     }
 
-    public CameraConfigureBean getCameraConfigureBean() {
+    public ConfigureBean getCameraConfigureBean() {
         return cameraConfigureBean;
     }
 }
