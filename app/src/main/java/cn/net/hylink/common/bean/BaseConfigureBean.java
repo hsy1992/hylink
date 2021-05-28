@@ -7,7 +7,6 @@ package cn.net.hylink.common.bean;
  */
 public class BaseConfigureBean {
 
-
     private Long _id;
 
     private String URL;
