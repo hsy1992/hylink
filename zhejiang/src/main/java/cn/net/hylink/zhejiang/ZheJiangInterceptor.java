@@ -1,10 +1,17 @@
 package cn.net.hylink.zhejiang;
 
+import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.StringWriter;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 
@@ -30,11 +37,11 @@ public class ZheJiangInterceptor implements Interceptor {
 
     private static final Charset UTF_8 = Charset.forName("UTF-8");
 
-    private static final String APP_KEY = "fb96bcb8ac6336a5a15a2dec7b7f3931";
-
-    private static final String SERVICE_KEY = "fb96bcb8ac6336a5a15a2dec7b7f3931";
+    private static String APP_KEY = "";
 
     private static final String ZHEJIANG_PATH = "/platform/redirect";
+
+    private static final String CONFIG_FILE = Environment.getExternalStorageDirectory() + "/appId.txt";
 
     @Override
     public Response intercept(Chain chain) throws IOException {
@@ -43,8 +50,9 @@ public class ZheJiangInterceptor implements Interceptor {
 
         if (path.contains(ZHEJIANG_PATH)) {
             //判断是否是浙江url
+            initAppKey();
             Request.Builder builder = request.newBuilder().addHeader("appKey", URLEncoder.encode(APP_KEY, "UTF-8"))
-                    .addHeader("serviceKey", URLEncoder.encode(SERVICE_KEY, "UTF-8"));
+                    .addHeader("serviceKey", URLEncoder.encode(APP_KEY, "UTF-8"));
             Buffer sink = new Buffer();
             request.body().writeTo(sink);
             String value = sink.readString(UTF_8);
@@ -60,5 +68,55 @@ public class ZheJiangInterceptor implements Interceptor {
             }
         }
         return chain.proceed(request);
+    }
+
+    private void initAppKey() {
+
+        if (TextUtils.isEmpty(APP_KEY)) {
+            File file = new File(CONFIG_FILE);
+            if (file.exists()) {
+                FileInputStream fileInputStream = null;
+                try {
+                    fileInputStream = new FileInputStream(file);
+                    byte[] bytes = new byte[(int) file.length()];
+                    fileInputStream.read(bytes);
+                    String content = new String(bytes);
+                    APP_KEY = AppKey.APP_IDS.get(Integer.parseInt(content.trim()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (fileInputStream != null) {
+                            fileInputStream.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                FileOutputStream fileOutputStream = null;
+                try {
+                    boolean created = file.createNewFile();
+                    if (created) {
+                        fileOutputStream = new FileOutputStream(file);
+                        PrintStream ps = new PrintStream(fileOutputStream);
+                        //默认嘉兴
+                        ps.print("4");
+                        APP_KEY = AppKey.APP_IDS.get(4);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (fileOutputStream != null) {
+                            fileOutputStream.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 }

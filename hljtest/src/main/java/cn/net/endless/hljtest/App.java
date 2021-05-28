@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 //import cn.net.hylink.wuhai.WuHaiInterceptor;
-//import cn.net.hylink.zhejiang.ZheJiangInterceptor;
+import cn.net.hylink.zhejiang.ZheJiangInterceptor;
 import okhttp3.OkHttpClient;
 
 /**
@@ -29,7 +29,7 @@ public class App extends Application {
             loggingInterceptor.setColorLevel(Level.INFO);
             OkHttpClient builder = new OkHttpClient.Builder()
 //                    .addInterceptor(new WuHaiInterceptor(this))
-//                    .addInterceptor(new ZheJiangInterceptor())
+                    .addInterceptor(new ZheJiangInterceptor())
                     .addInterceptor(loggingInterceptor)
                     .readTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)
                     .connectTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)
