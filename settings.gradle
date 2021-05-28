@@ -1,3 +1,4 @@
+include ':zhejiang'
 include ':flying'
 include ':aidl'
 include ':epsprint'
