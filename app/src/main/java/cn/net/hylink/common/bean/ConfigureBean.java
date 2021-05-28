@@ -15,7 +15,6 @@ public class ConfigureBean {
      * redis : {"ip":"192.168.1.100","port":6379}
      * cameraList : [{"name":"右方","type":0,"ip":"192.168.1.15","rtsp":"rtsp://admin:admin@192.168.1.15:554/c=0&s=1"},{"name":"左后","type":0,"ip":"192.168.1.12","rtsp":"rtsp://admin:admin@192.168.1.12:554/c=0&s=1"},{"name":"右后","type":0,"ip":"192.168.1.14","rtsp":"rtsp://admin:admin@192.168.1.14:554/c=0&s=1"},{"name":"后方","type":0,"ip":"192.168.1.13","rtsp":"rtsp://admin:admin@192.168.1.13:554/c=0&s=1"},{"name":"左前","type":0,"ip":"192.168.1.11","rtsp":"rtsp://admin:admin@192.168.1.11:554/c=0&s=1"},{"name":"右前","type":0,"ip":"192.168.1.16","rtsp":"rtsp://admin:admin@192.168.1.16:554/c=0&s=1"}]
      */
-    private BaseConfigBean baseConfigBean;
     private NvrBean nvrBean;
     private CloudBean cloud;
     private SnapBean snap;
@@ -23,6 +22,24 @@ public class ConfigureBean {
     private CarBean carBean;
     private List<CameraListBean> cameraList;
     private FtpBean ftpBean;
+    private String snapType;
+    private String uploadType;
+
+    public String getUploadType() {
+        return uploadType;
+    }
+
+    public void setUploadType(String uploadType) {
+        this.uploadType = uploadType;
+    }
+
+    public String getSnapType() {
+        return snapType;
+    }
+
+    public void setSnapType(String snapType) {
+        this.snapType = snapType;
+    }
 
     public FtpBean getFtpBean() {
         return ftpBean;
@@ -30,14 +47,6 @@ public class ConfigureBean {
 
     public void setFtpBean(FtpBean ftpBean) {
         this.ftpBean = ftpBean;
-    }
-
-    public BaseConfigBean getBaseConfigBean() {
-        return baseConfigBean;
-    }
-
-    public void setBaseConfigBean(BaseConfigBean baseConfigBean) {
-        this.baseConfigBean = baseConfigBean;
     }
 
     public NvrBean getNvrBean() {
@@ -415,62 +424,6 @@ public class ConfigureBean {
 
         public void setPassword(String password) {
             this.password = password;
-        }
-    }
-
-    public static class BaseConfigBean {
-        private String url;
-        private String carNo;
-        private String code;
-        private String name;
-        private String mqttUrl;
-
-        public BaseConfigBean(String url, String carNo, String code, String name, String mqttUrl) {
-            this.url = url;
-            this.carNo = carNo;
-            this.code = code;
-            this.name = name;
-            this.mqttUrl = mqttUrl;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public String getCarNo() {
-            return carNo;
-        }
-
-        public void setCarNo(String carNo) {
-            this.carNo = carNo;
-        }
-
-        public String getCode() {
-            return code;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getMqttUrl() {
-            return mqttUrl;
-        }
-
-        public void setMqttUrl(String mqttUrl) {
-            this.mqttUrl = mqttUrl;
         }
     }
 

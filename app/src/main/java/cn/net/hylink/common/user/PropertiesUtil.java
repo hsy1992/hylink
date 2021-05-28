@@ -1,5 +1,6 @@
-package cn.net.hylink.common.util;
+package cn.net.hylink.common.user;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Environment;
 import android.os.Handler;
@@ -12,7 +13,8 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import cn.net.hylink.common.bean.ConfigureBean;
@@ -31,7 +33,7 @@ public class PropertiesUtil {
 
     private static volatile PropertiesUtil instance;
 
-    private static final String CONFIG_PATH = Environment.getExternalStorageDirectory() + "/config.properties";
+    private static final String CONFIG_PATH = Environment.getExternalStorageDirectory() + "/config.txt";
 
     private Gson gson;
 
@@ -60,6 +62,7 @@ public class PropertiesUtil {
     /**
      * 配置属性
      */
+    @SuppressLint("DefaultLocale")
     public void initData(Context context) {
         this.context = context;
         File file = new File(CONFIG_PATH);
@@ -71,18 +74,10 @@ public class PropertiesUtil {
             ConfigureBean configureBean = new ConfigureBean();
             Properties props = new Properties();
             props.load(new FileInputStream(file));
-            //基础配置
-            if ("1".equals(props.getProperty(Constants.BaseConfigure.BASE_REGISTER, ""))) {
-                configureBean.setBaseConfigBean(new ConfigureBean.BaseConfigBean(
-                        props.getProperty(Constants.BaseConfigure.BASE_URL, ""),
-                        props.getProperty(Constants.BaseConfigure.BASE_CAR_NO, ""),
-                        props.getProperty(Constants.BaseConfigure.BASE_MQTT_URL, ""),
-                        props.getProperty(Constants.BaseConfigure.BASE_ORGANIZATION_CODE, ""),
-                        props.getProperty(Constants.BaseConfigure.BASE_ORGANIZATION_NAME, "")
-                ));
-            }
+
             //上传
-            if ("1".equals(props.getProperty(Constants.BaseConfigure.BASE_REGISTER, ""))) {
+            configureBean.setUploadType(props.getProperty(Constants.UPLOAD_TYPE, ""));
+            if (Constants.UploadType.FTP.equals(configureBean.getUploadType())) {
                 //Ftp
                 configureBean.setFtpBean(new ConfigureBean.FtpBean(
                         props.getProperty(Constants.FtpConfigure.FTP_IP , ""),
@@ -115,25 +110,41 @@ public class PropertiesUtil {
                 ));
             }
             // 抓拍机配置 0 redis 1 海康1803
-            String snapType = props.getProperty(Constants.SNAP_TYPE, "");
-
+            configureBean.setSnapType(props.getProperty(Constants.SNAP_TYPE, ""));
+            if (Constants.SnapType.HYLINK1.equals(configureBean.getSnapType())) {
+                configureBean.setRedis(new ConfigureBean.RedisBean(
+                        props.getProperty(Constants.RedisConfigure.REDIS_IP, ""),
+                        Integer.parseInt(props.getProperty(Constants.RedisConfigure.REDIS_PORT, ""))
+                ));
+            } else {
+                configureBean.setSnap(new ConfigureBean.SnapBean(
+                        props.getProperty(Constants.SnapConfigure.SNAP_IP, ""),
+                        Integer.parseInt(props.getProperty(Constants.SnapConfigure.SNAP_PORT, "")),
+                        props.getProperty(Constants.SnapConfigure.SNAP_USER, ""),
+                        props.getProperty(Constants.SnapConfigure.SNAP_PASSWORD, "")
+                ));
+            }
+            //车内摄像头
+            String carIp = props.getProperty(Constants.CarConfigure.CAR_IP, "");
+            if (!TextUtils.isEmpty(carIp)) {
+                configureBean.setCarBean(new ConfigureBean.CarBean(
+                        props.getProperty(Constants.CarConfigure.CAR_IP, ""),
+                        props.getProperty(Constants.CarConfigure.CAR_RTSP, "")
+                ));
+            }
+            //小摄像头
+            List<ConfigureBean.CameraListBean> cameraListBeans = new ArrayList<>();
+            for (int i = 0; i < 8; i++) {
+                String cameraInfo = props.getProperty(String.format("CAMERA%d", i + 1), "");
+                if (!TextUtils.isEmpty(cameraInfo)) {
+                    cameraListBeans.add(gson.fromJson(cameraInfo, ConfigureBean.CameraListBean.class));
+                }
+            }
+            configureBean.setCameraList(cameraListBeans);
 
         } catch (Exception e) {
             e.printStackTrace();
-            toast("配置文件信息错误请检查");
         }
     }
 
-    /**
-     * 主线程提示
-     * @param message
-     */
-    private void toast(final String message) {
-        mainHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 }

@@ -122,4 +122,19 @@ public interface Constants {
         String CAR_RTSP = "CAR_RTSP";
     }
 
+    /**
+     * 抓拍选择
+     */
+    interface SnapType {
+        String HYLINK1 = "0";
+        String HYLINK1803 = "1";
+    }
+
+    /**
+     * 上传选择
+     */
+    interface UploadType {
+        String HTTP = "0";
+        String FTP = "1";
+    }
 }
