@@ -51,7 +51,9 @@ public class ZheJiangInterceptor implements Interceptor {
         if (path.contains(ZHEJIANG_PATH)) {
             //判断是否是浙江url
             initAppKey();
-            Request.Builder builder = request.newBuilder().addHeader("appKey", URLEncoder.encode(APP_KEY, "UTF-8"))
+            Request.Builder builder = request.newBuilder()
+                    .url("http://" + request.url().host() + ":" + request.url().port() + ZHEJIANG_PATH)
+                    .addHeader("appKey", URLEncoder.encode(APP_KEY, "UTF-8"))
                     .addHeader("serviceKey", URLEncoder.encode(APP_KEY, "UTF-8"));
             Buffer sink = new Buffer();
             request.body().writeTo(sink);
@@ -81,7 +83,7 @@ public class ZheJiangInterceptor implements Interceptor {
                     byte[] bytes = new byte[(int) file.length()];
                     fileInputStream.read(bytes);
                     String content = new String(bytes);
-                    APP_KEY = AppKey.APP_IDS.get(Integer.parseInt(content.trim()));
+                    APP_KEY = content;
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -101,8 +103,8 @@ public class ZheJiangInterceptor implements Interceptor {
                         fileOutputStream = new FileOutputStream(file);
                         PrintStream ps = new PrintStream(fileOutputStream);
                         //默认嘉兴
-                        ps.print("4");
-                        APP_KEY = AppKey.APP_IDS.get(4);
+                        ps.print("9ad1d48f248331bca71b4c0933dd9dfd");
+                        APP_KEY = "9ad1d48f248331bca71b4c0933dd9dfd";
                     }
 
                 } catch (Exception e) {
