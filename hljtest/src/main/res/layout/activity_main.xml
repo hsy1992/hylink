@@ -14,4 +14,13 @@
         android:textColor="#fff"
         android:background="#ff00ff" />
 
+    <TextView android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:text="写入"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:onClick="write"
+        android:textColor="#fff"
+        android:background="#ff00ff" />
+
 </LinearLayout>

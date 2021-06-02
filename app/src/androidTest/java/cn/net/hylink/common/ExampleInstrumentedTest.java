@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 import cn.net.hylink.common.database.AppDatabase;
+import cn.net.hylink.common.util.ConfigUtil;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +23,7 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        AppDatabase.getInstance(appContext).getSpanResultDao().loadSpanResult();
+        ConfigUtil.getInstance().init(appContext);
+
     }
 }

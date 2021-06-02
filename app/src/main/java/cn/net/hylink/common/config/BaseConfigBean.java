@@ -71,4 +71,16 @@ public class BaseConfigBean {
     public void setMqttUrl(String mqttUrl) {
         this.mqttUrl = mqttUrl;
     }
+
+    @Override
+    public String toString() {
+        return "BaseConfigBean{" +
+                "url='" + url + '\'' +
+                ", carNo='" + carNo + '\'' +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", mqttUrl='" + mqttUrl + '\'' +
+                ", isRegister=" + isRegister +
+                '}';
+    }
 }

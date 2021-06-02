@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 //import cn.net.hylink.wuhai.WuHaiInterceptor;
+import cn.net.hylink.common.util.ConfigUtil;
 import okhttp3.OkHttpClient;
 
 /**
@@ -22,6 +23,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         OkGo.getInstance().init(this);
+        ConfigUtil.getInstance().init(this);
         try {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("OkGo");
             loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);

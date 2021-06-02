@@ -14,7 +14,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import cn.net.hylink.common.bean.ConfigureBean;
 
 /**
  * @author haosiyuan
@@ -42,34 +41,6 @@ public class AssetsUtil {
             is.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    public static ConfigureBean getAssets(Context context, String path) {
-
-        File model = new File(path);
-        Gson gson = new Gson();
-        File file = new File(Environment.getExternalStorageDirectory(), model.getName());
-        if (file.exists()) {
-            try {
-                FileInputStream is = new FileInputStream(file);
-                InputStreamReader inputReader = new InputStreamReader(is);
-                BufferedReader bufferReader = new BufferedReader(inputReader);
-                StringBuffer content = new StringBuffer();
-                //分行读取
-                String line;
-                while (( line = bufferReader.readLine()) != null) {
-                    content.append(line + "\n");
-                }
-                is.close();
-                return gson.fromJson(content.toString(), new TypeToken<ConfigureBean>(){}.getType());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        } else {
-            return gson.fromJson(getJson(path, context), new TypeToken<ConfigureBean>(){}.getType());
         }
     }
 

@@ -2,21 +2,15 @@ package cn.net.hylink.common.database;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
-import android.os.Environment;
 
-import cn.net.hylink.common.database.dao.CameraSettingDao;
-import cn.net.hylink.common.database.dao.CaptureDao;
 import cn.net.hylink.common.database.dao.OtherHistoryMQTTDao;
 import cn.net.hylink.common.database.dao.PushIpCodeDao;
 import cn.net.hylink.common.database.dao.PushSettingDao;
 import cn.net.hylink.common.database.dao.SpanHistoryMQTTDao;
 import cn.net.hylink.common.database.dao.SpanResultDao;
-import cn.net.hylink.common.database.entity.CameraSettingEntity;
-import cn.net.hylink.common.database.entity.CaptureEntity;
 import cn.net.hylink.common.database.entity.OtherHistoryMQTTEntity;
 import cn.net.hylink.common.database.entity.PushIpCodeEntity;
 import cn.net.hylink.common.database.entity.PushSettingEntity;
@@ -29,7 +23,7 @@ import cn.net.hylink.common.database.entity.SpanResultEntity;
  * info : 数据库
  */
 @Database(version = 7, entities = {SpanResultEntity.class, OtherHistoryMQTTEntity.class, SpanHistoryMQTTEntity.class
-        , PushSettingEntity.class, PushIpCodeEntity.class, CameraSettingEntity.class, CaptureEntity.class},
+        , PushSettingEntity.class, PushIpCodeEntity.class},
         exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -104,7 +98,4 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract PushIpCodeDao getPushIpCodeDao();
 
-    public abstract CameraSettingDao getCameraSettingDao();
-
-    public abstract CaptureDao getCaptureDao();
 }
