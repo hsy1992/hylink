@@ -94,9 +94,9 @@ public class ConfigUtil {
                 baseConfigBean = new BaseConfigBean(
                         propertiesOperation.readString(Constants.BaseConfigure.BASE_URL, ""),
                         propertiesOperation.readString(Constants.BaseConfigure.BASE_CAR_NO, ""),
-                        propertiesOperation.readString(Constants.BaseConfigure.BASE_MQTT_URL, ""),
                         propertiesOperation.readString(Constants.BaseConfigure.BASE_ORGANIZATION_CODE, ""),
                         propertiesOperation.readString(Constants.BaseConfigure.BASE_ORGANIZATION_NAME, ""),
+                        propertiesOperation.readString(Constants.BaseConfigure.BASE_MQTT_URL, ""),
                         "1".equals(propertiesOperation.readString(Constants.BaseConfigure.BASE_REGISTER, ""))
                 );
             }
