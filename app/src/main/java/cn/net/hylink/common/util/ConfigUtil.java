@@ -48,6 +48,7 @@ public class ConfigUtil {
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     private AtomicBoolean isFtp;
+    private int snapType = Constants.SnapType.ERROR;
     private CommonConfigBean CommonConfigBean;
     private CloudConfigBean cloudConfigBean;
     private CommonConfigBean nvrConfigBean;
@@ -327,6 +328,30 @@ public class ConfigUtil {
                     instance.snapConfigBean = snapConfigBean;
                 }
             });
+        }
+    }
+
+    public int getSnapType() {
+        synchronized (ConfigUtil.this) {
+            if (propertiesOperation.getProps() == null) {
+                toast("配置文件信息错误请检查");
+                return Constants.SnapType.ERROR;
+            }
+            if (snapType < 0) {
+                snapType = propertiesOperation.readInt(Constants.SNAP_TYPE, Constants.SnapType.ERROR);
+            }
+            return snapType;
+        }
+    }
+
+    public void saveSnapType(int type) {
+        synchronized (ConfigUtil.this) {
+            if (propertiesOperation.getProps() == null) {
+                toast("配置文件信息错误请检查");
+                return;
+            }
+            snapType = type;
+            propertiesOperation.writeInt(Constants.SNAP_TYPE, snapType);
         }
     }
 

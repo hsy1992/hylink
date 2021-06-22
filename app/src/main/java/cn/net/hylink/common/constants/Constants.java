@@ -41,10 +41,6 @@ public interface Constants {
 
     String SP_CAPTURE_CONTENT = "SP_CAPTURE_CONTENT";
 
-    int HYLINK1 = 1;
-
-    int HYLINK1803 = 2;
-
     /**
      * mqtt推送 url
      */
@@ -126,10 +122,10 @@ public interface Constants {
      * 抓拍选择
      */
     interface SnapType {
-        String HYLINK1 = "0";
-        String HYLINK1803 = "1";
+        int HYLINK1 = 0;
+        int HYLINK1803 = 1;
+        int ERROR = -1;
     }
-
     /**
      * 上传选择
      */
