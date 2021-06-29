@@ -2,5 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.net.hylink.common">
 
+    <application>
+        <provider
+            android:name=".InitContentProvider"
+            android:authorities="cn.net.hylink.common.init-provider"
+            android:exported="false"
+            android:multiprocess="true" />
+
+    </application>
 
 </manifest>

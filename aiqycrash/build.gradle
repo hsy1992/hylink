@@ -32,7 +32,8 @@ android {
 
 dependencies {
     implementation 'com.iqiyi.xcrash:xcrash-android-lib:3.0.0'
-    api 'com.github.hsy1992:hylink:1.0.0-beta.5'
+//    api 'com.github.hsy1992:hylink:1.0.0-beta.5'
+    api project(path: ':app')
     compileOnly rootProject.ext.okhttp['okhttp']
     implementation rootProject.ext.retrofit['okhttp3LoggerInterceptor']
 }

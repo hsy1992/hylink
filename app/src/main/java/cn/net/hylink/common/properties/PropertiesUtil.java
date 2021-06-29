@@ -1,15 +1,8 @@
 package cn.net.hylink.common.properties;
 
-import android.content.Context;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import java.util.HashMap;
-import java.util.Properties;
 
 /**
  * @ClassName PropertiesUtil
@@ -24,7 +17,7 @@ public class PropertiesUtil {
 
     private static volatile PropertiesUtil instance;
 
-    public static final String CONFIG_PATH = Environment.getExternalStorageDirectory() + "/config.txt";
+    public static final String CONFIG_PATH = Environment.getExternalStorageDirectory() + "/config.properties";
 
     //缓存 Properties
     private final HashMap<String, PropertiesOperation> propertiesHashMap = new HashMap<>();

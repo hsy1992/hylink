@@ -29,6 +29,10 @@ android {
         abortOnError false
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 //api key 16e4099363839f8f3611b7b522d49fe4fbbc1095
@@ -62,4 +66,7 @@ dependencies {
     //测试
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:rules:1.3.0'
+    implementation 'com.iqiyi.xcrash:xcrash-android-lib:3.0.0'
+    implementation rootProject.ext.okhttp['okhttp']
+    implementation rootProject.ext.retrofit['okhttp3LoggerInterceptor']
 }
