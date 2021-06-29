@@ -72,4 +72,7 @@ public class MainActivity extends Activity {
 
     }
 
+    public void crash(View view) {
+        throw new RuntimeException("报错了");
+    }
 }

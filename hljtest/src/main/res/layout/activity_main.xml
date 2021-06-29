@@ -23,4 +23,13 @@
         android:textColor="#fff"
         android:background="#ff00ff" />
 
+    <TextView android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:text="抛出异常"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:onClick="crash"
+        android:textColor="#fff"
+        android:background="#ff00ff" />
+
 </LinearLayout>

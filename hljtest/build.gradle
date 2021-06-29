@@ -20,13 +20,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
     implementation 'com.lzy.net:okgo:3.0.4'
     implementation files('libs\\reglinksdk.jar')
-    implementation project(path: ':app')
+//    implementation project(path: ':app')
+    implementation project(path: ':aiqycrash')
 //    implementation project(path: ':epsprint')
 //    implementation 'cn.net.hylink:wuhai:0.0.8'
 //    implementation project(path: ':hljpolice')

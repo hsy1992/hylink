@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 //import cn.net.hylink.wuhai.WuHaiInterceptor;
+import cn.net.endless.crash.CrashUtil;
 import cn.net.hylink.common.util.ConfigUtil;
 import okhttp3.OkHttpClient;
 
@@ -40,5 +41,7 @@ public class App extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        CrashUtil.getInstance().init(this);
     }
 }
