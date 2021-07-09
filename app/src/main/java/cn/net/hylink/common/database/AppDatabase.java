@@ -11,6 +11,8 @@ import cn.net.hylink.common.database.dao.PushIpCodeDao;
 import cn.net.hylink.common.database.dao.PushSettingDao;
 import cn.net.hylink.common.database.dao.SpanHistoryMQTTDao;
 import cn.net.hylink.common.database.dao.SpanResultDao;
+import cn.net.hylink.common.database.entity.CameraSettingEntity;
+import cn.net.hylink.common.database.entity.CaptureEntity;
 import cn.net.hylink.common.database.entity.OtherHistoryMQTTEntity;
 import cn.net.hylink.common.database.entity.PushIpCodeEntity;
 import cn.net.hylink.common.database.entity.PushSettingEntity;
@@ -23,7 +25,7 @@ import cn.net.hylink.common.database.entity.SpanResultEntity;
  * info : 数据库
  */
 @Database(version = 7, entities = {SpanResultEntity.class, OtherHistoryMQTTEntity.class, SpanHistoryMQTTEntity.class
-        , PushSettingEntity.class, PushIpCodeEntity.class},
+        , PushSettingEntity.class, PushIpCodeEntity.class, CameraSettingEntity.class, CaptureEntity.class},
         exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
