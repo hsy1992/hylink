@@ -188,7 +188,7 @@ public class ConfigUtil {
                 toast("配置文件信息错误请检查");
                 return;
             }
-            isFtp = new AtomicBoolean(ftpBean == null);
+            isFtp = new AtomicBoolean(ftpBean != null);
 
             propertiesOperation.writeString(Constants.FtpConfigure.FTP_IP, ftpBean == null ? "" : ftpBean.getIp());
             propertiesOperation.writeString(Constants.FtpConfigure.FTP_USER, ftpBean == null ? "" : ftpBean.getUser());
