@@ -1,5 +1,6 @@
 package cn.net.hylink.common.properties;
 
+import android.content.Context;
 import android.os.Environment;
 
 import java.util.HashMap;
@@ -36,12 +37,12 @@ public class PropertiesUtil {
     private PropertiesUtil() {
     }
 
-    public PropertiesOperation getProperties(String key) {
+    public PropertiesOperation getProperties(Context mContext, String key) {
         synchronized (propertiesHashMap) {
             if (propertiesHashMap.containsKey(key)) {
                 return propertiesHashMap.get(key);
             }
-            PropertiesOperation propertiesOperation = new PropertiesOperation(key);
+            PropertiesOperation propertiesOperation = new PropertiesOperation(mContext, key);
             propertiesOperation.open();
             propertiesHashMap.put(key, propertiesOperation);
 

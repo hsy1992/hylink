@@ -1,11 +1,13 @@
 package cn.net.hylink.common.properties;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Properties;
@@ -23,9 +25,11 @@ public class PropertiesOperation implements IProperties {
 
     private String mPath;
     private Properties props;
+    private Context mContext;
 
-    public PropertiesOperation(String mPath) {
+    public PropertiesOperation(Context mContext, String mPath) {
         this.mPath = mPath;
+        this.mContext = mContext;
     }
 
     @Override
@@ -33,7 +37,7 @@ public class PropertiesOperation implements IProperties {
         File file = new File(mPath);
         if (!file.exists()) {
             Log.i(TAG, "未找到配置文件");
-            return;
+            initConfigFile(file);
         }
         FileInputStream in = null;
         try {
@@ -111,5 +115,41 @@ public class PropertiesOperation implements IProperties {
 
     public Properties getProps() {
         return props;
+    }
+
+    private void initConfigFile(File file) {
+        if (! file.exists()) {
+            InputStream inputStream = null;
+            FileOutputStream fileOutputStream = null;
+
+            try {
+                file.createNewFile();
+                inputStream = mContext.getAssets().open("config.properties");
+                fileOutputStream = new FileOutputStream(file);
+                // 开始读和写
+                byte[] bys = new byte[1024];
+                int len;
+                while ((len = inputStream.read(bys)) != - 1) {
+                    fileOutputStream.write(bys, 0, len);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (fileOutputStream != null) {
+                    try {
+                        fileOutputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 }

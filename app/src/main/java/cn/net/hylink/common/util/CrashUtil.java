@@ -1,6 +1,5 @@
 package cn.net.hylink.common.util;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;

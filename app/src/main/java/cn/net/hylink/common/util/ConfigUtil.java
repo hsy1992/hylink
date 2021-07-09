@@ -76,7 +76,7 @@ public class ConfigUtil {
     public void init(Context mContext) {
         this.mContext = mContext.getApplicationContext();
         try {
-            propertiesOperation = PropertiesUtil.getInstance().getProperties(PropertiesUtil.CONFIG_PATH);
+            propertiesOperation = PropertiesUtil.getInstance().getProperties(mContext, PropertiesUtil.CONFIG_PATH);
         } catch (Exception e) {
             e.printStackTrace();
             toast("配置文件信息错误请检查");
