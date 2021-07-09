@@ -59,6 +59,8 @@ public class UserInfoProvide {
     private void setUserInfo(Cursor cursor) {
         if (cursor != null) {
             userInfo = CursorToBeanUtil.cursor2Model(cursor, SignInResponseBean.class);
+        } else {
+            userInfo = null;
         }
     }
 }
