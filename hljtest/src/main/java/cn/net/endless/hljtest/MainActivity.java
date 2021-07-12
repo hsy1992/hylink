@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
 
         for (int i = 0; i < 8; i++) {
             list.add(new CameraConfigBean(i + 1, "z" + i, 1, "ip" + i, "rtsp" + i,
-                    "code" + i, true));
+                    "code" + i, false));
         }
         ConfigUtil.getInstance().saveCameraList(list);
 

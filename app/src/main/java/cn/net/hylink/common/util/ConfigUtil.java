@@ -457,7 +457,7 @@ public class ConfigUtil {
                             gson.toJson(cameraConfigBean));
                 } else {
                     propertiesOperation.writeString(String.format(Locale.getDefault(),"CAMERA%d", cameraConfigBean.getId()),
-                            "");
+                            gson.toJson(cameraConfigBean));
                 }
             }
 

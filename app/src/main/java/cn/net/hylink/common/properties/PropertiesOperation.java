@@ -42,7 +42,7 @@ public class PropertiesOperation implements IProperties {
         FileInputStream in = null;
         try {
             in = new FileInputStream(file);
-            props = new Properties();
+            props = new OrderedProperties();
             props.load(new InputStreamReader(in, "UTF-8"));
         } catch (Exception e) {
             e.printStackTrace();
