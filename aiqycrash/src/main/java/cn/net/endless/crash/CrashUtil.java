@@ -3,6 +3,7 @@ package cn.net.endless.crash;
 import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -113,12 +114,13 @@ public class CrashUtil {
             String crashReport = new JSONObject(map).toString();
             JSONObject requestJson = new JSONObject();
             try {
-                requestJson.put("error", crashReport);
+                requestJson.put("text", crashReport);
+                requestJson.put("mei", Build.SERIAL);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             Request request = new Request.Builder()
-                    .url(ConfigUtil.getInstance().getBaseConfigBean().getUrl() + "demo/error")
+                    .url(ConfigUtil.getInstance().getBaseConfigBean().getUrl() + "log/report")
                     .post(RequestBody.create(mediaType, requestJson.toString()))
                     .build();
             okHttpClient.newCall(request).enqueue(new Callback() {
