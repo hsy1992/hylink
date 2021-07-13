@@ -378,8 +378,8 @@ public class ConfigUtil {
                 toast("配置文件信息错误请检查");
                 return;
             }
-            propertiesOperation.readString(Constants.RedisConfigure.REDIS_IP, redisConfigBean.getIp());
-            propertiesOperation.readInt(Constants.RedisConfigure.REDIS_PORT, redisConfigBean.getPort());
+            propertiesOperation.writeString(Constants.RedisConfigure.REDIS_IP, redisConfigBean.getIp());
+            propertiesOperation.writeInt(Constants.RedisConfigure.REDIS_PORT, redisConfigBean.getPort());
 
             propertiesOperation.commit(new IPropertiesCommit() {
                 @Override
