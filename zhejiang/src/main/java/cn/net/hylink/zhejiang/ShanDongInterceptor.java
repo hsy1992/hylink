@@ -1,5 +1,6 @@
 package cn.net.hylink.zhejiang;
 
+import android.app.Application;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,6 +16,8 @@ import java.io.StringWriter;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 
+import cn.net.hylink.zhejiang.config.PropertiesOperation;
+import cn.net.hylink.zhejiang.config.PropertiesUtil;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -29,7 +32,7 @@ import okio.Buffer;
  * @Date 2021/5/28 9:47
  * @Version 1.0
  */
-public class ZheJiangInterceptor implements Interceptor {
+public class ShanDongInterceptor implements Interceptor {
 
     private static final String TAG = "ZheJiangInterceptor";
 
@@ -39,9 +42,21 @@ public class ZheJiangInterceptor implements Interceptor {
 
     private static String APP_KEY = "";
 
+    private static String SERVICE_KEY = "";
+
     private static final String ZHEJIANG_PATH = "/platform/redirect";
 
-    private static final String CONFIG_FILE = Environment.getExternalStorageDirectory() + "/appId.txt";
+    private static final String CONFIG_FILE = Environment.getExternalStorageDirectory() + "/sdAppId.txt";
+
+    private Application application;
+    private PropertiesOperation propertiesOperation;
+
+    public ShanDongInterceptor(Application application) {
+        this.application = application;
+        propertiesOperation = PropertiesUtil.getInstance()
+                .getProperties(application, PropertiesUtil.CONFIG_PATH);
+
+    }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
@@ -49,12 +64,19 @@ public class ZheJiangInterceptor implements Interceptor {
         String path = request.url().encodedPath();
 
         if (path.contains(ZHEJIANG_PATH)) {
+            if ((TextUtils.isEmpty(APP_KEY) || TextUtils.isEmpty(SERVICE_KEY) && propertiesOperation != null)) {
+                try {
+                    APP_KEY = propertiesOperation.readString("appKey", "");
+                    SERVICE_KEY = propertiesOperation.readString("serviceKey", "");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             //判断是否是浙江url
-            initAppKey();
             Request.Builder builder = request.newBuilder()
                     .url("http://" + request.url().host() + ":" + request.url().port() + ZHEJIANG_PATH)
                     .addHeader("appKey", URLEncoder.encode(APP_KEY, "UTF-8"))
-                    .addHeader("serviceKey", URLEncoder.encode(APP_KEY, "UTF-8"));
+                    .addHeader("serviceKey", URLEncoder.encode(SERVICE_KEY, "UTF-8"));
             Buffer sink = new Buffer();
             request.body().writeTo(sink);
             String value = sink.readString(UTF_8);
@@ -72,53 +94,4 @@ public class ZheJiangInterceptor implements Interceptor {
         return chain.proceed(request);
     }
 
-    private void initAppKey() {
-
-        if (TextUtils.isEmpty(APP_KEY)) {
-            File file = new File(CONFIG_FILE);
-            if (file.exists()) {
-                FileInputStream fileInputStream = null;
-                try {
-                    fileInputStream = new FileInputStream(file);
-                    byte[] bytes = new byte[(int) file.length()];
-                    fileInputStream.read(bytes);
-                    String content = new String(bytes);
-                    APP_KEY = content;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        if (fileInputStream != null) {
-                            fileInputStream.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } else {
-                FileOutputStream fileOutputStream = null;
-                try {
-                    boolean created = file.createNewFile();
-                    if (created) {
-                        fileOutputStream = new FileOutputStream(file);
-                        PrintStream ps = new PrintStream(fileOutputStream);
-                        //默认萧山
-                        ps.print("8316f9c1c3a4398391e48fae52881214");
-                        APP_KEY = "8316f9c1c3a4398391e48fae52881214";
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        if (fileOutputStream != null) {
-                            fileOutputStream.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-    }
 }
