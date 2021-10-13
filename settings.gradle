@@ -1,3 +1,4 @@
+include ':fuzhou'
 include ':flying'
 include ':aidl'
 include ':epsprint'
