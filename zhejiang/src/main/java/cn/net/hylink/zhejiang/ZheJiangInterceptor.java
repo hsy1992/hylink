@@ -43,6 +43,8 @@ public class ZheJiangInterceptor implements Interceptor {
 
     private static final String CONFIG_FILE = Environment.getExternalStorageDirectory() + "/appId.txt";
 
+    private static final String CONFIG_FILE_SYSTEM = "/system/etc/appId.txt";
+
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
@@ -95,30 +97,55 @@ public class ZheJiangInterceptor implements Interceptor {
                         e.printStackTrace();
                     }
                 }
-            } else {
-                FileOutputStream fileOutputStream = null;
-                try {
-                    boolean created = file.createNewFile();
-                    if (created) {
-                        fileOutputStream = new FileOutputStream(file);
-                        PrintStream ps = new PrintStream(fileOutputStream);
-                        //默认萧山
-                        ps.print("8316f9c1c3a4398391e48fae52881214");
-                        APP_KEY = "8316f9c1c3a4398391e48fae52881214";
-                    }
+                return;
+            }
 
+            File appIdFile = new File(CONFIG_FILE_SYSTEM);
+            if (appIdFile.exists()) {
+                FileInputStream fileInputStream = null;
+                try {
+                    fileInputStream = new FileInputStream(appIdFile);
+                    byte[] bytes = new byte[(int) appIdFile.length()];
+                    fileInputStream.read(bytes);
+                    String content = new String(bytes);
+                    APP_KEY = content;
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
                     try {
-                        if (fileOutputStream != null) {
-                            fileOutputStream.close();
+                        if (fileInputStream != null) {
+                            fileInputStream.close();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
+                return;
+            }
+
+            FileOutputStream fileOutputStream = null;
+            try {
+                boolean created = file.createNewFile();
+                if (created) {
+                    fileOutputStream = new FileOutputStream(file);
+                    PrintStream ps = new PrintStream(fileOutputStream);
+                    //默认萧山
+                    ps.print("8316f9c1c3a4398391e48fae52881214");
+                    APP_KEY = "8316f9c1c3a4398391e48fae52881214";
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (fileOutputStream != null) {
+                        fileOutputStream.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
     }
 }
