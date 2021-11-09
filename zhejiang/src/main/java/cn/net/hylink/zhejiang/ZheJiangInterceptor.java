@@ -102,11 +102,18 @@ public class ZheJiangInterceptor implements Interceptor {
 
             File appIdFile = new File(CONFIG_FILE_SYSTEM);
             if (appIdFile.exists()) {
+                //读写到本地
                 FileInputStream fileInputStream = null;
                 try {
                     fileInputStream = new FileInputStream(appIdFile);
                     byte[] bytes = new byte[(int) appIdFile.length()];
                     fileInputStream.read(bytes);
+                    file.createNewFile();
+                    if (file.exists()) {
+                        FileOutputStream fileOutputStream = new FileOutputStream(file);
+                        fileOutputStream.write(bytes);
+                        fileOutputStream.close();
+                    }
                     String content = new String(bytes);
                     APP_KEY = content;
                 } catch (Exception e) {
