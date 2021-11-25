@@ -36,4 +36,10 @@ public interface SpanHistoryMQTTDao {
 
     @Query("SELECT * FROM TB_MQTT_SPAN WHERE id = :id")
     SpanHistoryMQTTEntity findSpanHistoryById(long id);
+
+    /**
+     * 根据时间查找预警
+     */
+    @Query("SELECT * FROM TB_MQTT_SPAN WHERE date > :startTime AND date < :endTime")
+    List<SpanHistoryMQTTEntity> findSpanHistoryListByDate(long startTime, long endTime);
 }
