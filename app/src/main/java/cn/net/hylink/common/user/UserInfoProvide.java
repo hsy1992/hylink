@@ -71,5 +71,18 @@ public class UserInfoProvide {
         } else {
             userInfo = null;
         }
+        if (changeDataObserverCallback != null) {
+            changeDataObserverCallback.onUserDataChange(userInfo);
+        }
+    }
+
+    public interface ChangeDataObserverCallback {
+        void onUserDataChange(SignInResponseBean.ResultBean.ListBean userInfo);
+    }
+
+    private ChangeDataObserverCallback changeDataObserverCallback;
+
+    public void setChangeDataObserverCallback(ChangeDataObserverCallback changeDataObserverCallback) {
+        this.changeDataObserverCallback = changeDataObserverCallback;
     }
 }
