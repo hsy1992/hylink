@@ -44,5 +44,5 @@ public interface SpanHistoryMQTTDao {
     List<SpanHistoryMQTTEntity> findSpanHistoryListByDate(long startTime, long endTime);
 
     @Query("UPDATE TB_MQTT_SPAN SET finish = 1 WHERE id = :id")
-    SpanHistoryMQTTEntity finishSpan(long id);
+    void updateSpan(long id);
 }

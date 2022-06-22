@@ -18,11 +18,6 @@ import io.reactivex.Flowable;
 @Dao
 public interface OtherHistoryMQTTDao {
 
-    /**
-     * 分页查找
-     */
-    @Query("SELECT * FROM tb_mqtt_other order by id desc limit :pageNo, :pageSize")
-    Flowable<List<SpanHistoryMQTTEntity>> findOtherHistory(int pageNo, int pageSize);
 
     /**
      * @param data
