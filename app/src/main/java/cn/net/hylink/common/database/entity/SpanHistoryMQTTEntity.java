@@ -27,9 +27,9 @@ public class SpanHistoryMQTTEntity {
     private long date;
 
     //0 false 1 true
-    private int finish;
+    private Integer finish;
 
-    public SpanHistoryMQTTEntity(String mqttApi, String json, long date, int finish) {
+    public SpanHistoryMQTTEntity(String mqttApi, String json, long date, Integer finish) {
         this.mqttApi = mqttApi;
         this.json = json;
         this.date = date;
@@ -68,11 +68,11 @@ public class SpanHistoryMQTTEntity {
         this.id = id;
     }
 
-    public int getFinish() {
+    public Integer getFinish() {
         return finish;
     }
 
-    public void setFinish(int finish) {
+    public void setFinish(Integer finish) {
         this.finish = finish;
     }
 }
