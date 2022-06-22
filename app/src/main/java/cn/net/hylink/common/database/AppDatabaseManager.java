@@ -22,7 +22,7 @@ public class AppDatabaseManager {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, Environment.getExternalStorageDirectory() + "/span.db")
                             .addMigrations(MIGRATION_1_4, MIGRATION_2_4, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6,
-                                    MIGRATION_6_7)
+                                    MIGRATION_6_7, MIGRATION_7_8)
                             .allowMainThreadQueries()
                             .build();
                 }
