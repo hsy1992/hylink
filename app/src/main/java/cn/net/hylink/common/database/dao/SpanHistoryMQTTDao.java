@@ -42,4 +42,7 @@ public interface SpanHistoryMQTTDao {
      */
     @Query("SELECT * FROM TB_MQTT_SPAN WHERE date > :startTime AND date < :endTime ORDER BY date DESC")
     List<SpanHistoryMQTTEntity> findSpanHistoryListByDate(long startTime, long endTime);
+
+    @Query("UPDATE TB_MQTT_SPAN SET finish = 1 WHERE id = :id")
+    SpanHistoryMQTTEntity finishSpan(long id);
 }
