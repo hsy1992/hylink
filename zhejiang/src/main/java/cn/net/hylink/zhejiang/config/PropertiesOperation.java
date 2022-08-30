@@ -125,7 +125,7 @@ public class PropertiesOperation implements IProperties {
 
             try {
                 file.createNewFile();
-                inputStream = mContext.getAssets().open("sdAppId.txt");
+                inputStream = mContext.getAssets().open("appIdKey.txt");
                 fileOutputStream = new FileOutputStream(file);
                 // 开始读和写
                 byte[] bys = new byte[1024];

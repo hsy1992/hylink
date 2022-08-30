@@ -17,7 +17,7 @@ public class PropertiesUtil {
 
     private static volatile PropertiesUtil instance;
 
-    public static final String CONFIG_PATH = Environment.getExternalStorageDirectory() + "/sdAppId.txt";
+    public static final String CONFIG_PATH = Environment.getExternalStorageDirectory() + "/appIdKey.txt";
 
     //缓存 Properties
     private final HashMap<String, PropertiesOperation> propertiesHashMap = new HashMap<>();
