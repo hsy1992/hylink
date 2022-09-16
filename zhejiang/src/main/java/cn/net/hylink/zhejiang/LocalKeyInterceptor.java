@@ -44,6 +44,8 @@ public class LocalKeyInterceptor implements Interceptor {
 
     private static final String ZHEJIANG_PATH = "/platform/redirect";
 
+    private static final String ZHEJIANG_PATH3 = "/receive/redirect";
+
     private static final String CONFIG_FILE_SYSTEM = "/system/etc/appId.txt";
 
     private Application application;
@@ -60,7 +62,8 @@ public class LocalKeyInterceptor implements Interceptor {
         Request request = chain.request();
         String path = request.url().encodedPath();
 
-        if (path.contains(ZHEJIANG_PATH)) {
+        if (path.contains("redirect")) {
+            String replaceUrl = path.contains(ZHEJIANG_PATH) ? ZHEJIANG_PATH : ZHEJIANG_PATH3;
             if ((TextUtils.isEmpty(APP_KEY) || TextUtils.isEmpty(SERVICE_KEY) && propertiesOperation != null)) {
                 try {
                     APP_KEY = propertiesOperation.readString("appKey", "");
@@ -71,7 +74,7 @@ public class LocalKeyInterceptor implements Interceptor {
             }
             //判断是否是浙江url
             Request.Builder builder = request.newBuilder()
-                    .url("http://" + request.url().host() + ":" + request.url().port() + ZHEJIANG_PATH)
+                    .url("http://" + request.url().host() + ":" + request.url().port() + replaceUrl)
                     .addHeader("appKey", URLEncoder.encode(APP_KEY, "UTF-8"))
                     .addHeader("serviceKey", URLEncoder.encode(SERVICE_KEY, "UTF-8"));
             Buffer sink = new Buffer();
@@ -80,7 +83,7 @@ public class LocalKeyInterceptor implements Interceptor {
 
             try {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("serviceSuffix", path.replace(ZHEJIANG_PATH, ""));
+                jsonObject.put("serviceSuffix", path.replace(replaceUrl, ""));
                 jsonObject.put("params", new JSONObject(value));
                 Log.i(TAG, jsonObject.toString());
                 request = builder.post(RequestBody.create(MEDIA_TYPE, jsonObject.toString())).build();
