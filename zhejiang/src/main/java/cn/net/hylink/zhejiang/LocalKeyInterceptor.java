@@ -85,6 +85,10 @@ public class LocalKeyInterceptor implements Interceptor {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("serviceSuffix", path.replace(replaceUrl, ""));
                 jsonObject.put("params", new JSONObject(value));
+                jsonObject.put("serviceMethod", "post");
+                JSONObject serviceHeader = new JSONObject(value);
+                serviceHeader.put("content-type", "application/json");
+                jsonObject.put("serviceHeader", serviceHeader);
                 Log.i(TAG, jsonObject.toString());
                 request = builder.post(RequestBody.create(MEDIA_TYPE, jsonObject.toString())).build();
             } catch (Exception e) {
